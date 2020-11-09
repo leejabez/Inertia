@@ -1,6 +1,6 @@
 <template>
     <div>
-        journal
+        <h2 class="font-weight-bold">Journal.</h2>
     </div>
 </template>
 
