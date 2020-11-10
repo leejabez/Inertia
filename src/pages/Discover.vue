@@ -10,6 +10,22 @@
         </b-col>
       </b-row>
     </b-container>
+    <!-- Adding profiles into Discover page from here -->
+        <b-col cols="12">
+          <b-container>
+            <b-row>
+              <template  >
+                <b-col cols="6" md="4" lg="4" xl="3" class="mb-4 text-center">
+                  <div style="cursor:pointer" class="profile_pic mx-auto"></div>
+                  <p style="cursor:pointer" class="font-weight-bold mt-2">Anna</p>
+          
+                </b-col>
+              </template>
+             
+            </b-row>
+          </b-container>
+        </b-col>
+        <!-- Adding profiles into Discover page to here -->
     <div class="py-4 text-center">footer</div>
   </div>
 </template>
