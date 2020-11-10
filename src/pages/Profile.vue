@@ -14,6 +14,21 @@
           </div>
         </b-col>
       <!-- Back button to here -->
+
+      <!-- Name + Add Friend Button from here -->
+        <b-col cols="12" md="4">
+          <div>
+            <div class="profile_pic mx-auto"></div>
+            <p class="font-weight-bold mt-2">Anna</p>
+            <b-btn
+              class="font-weight-bold bg-fer text-capitalize w-100 rounded-pill"
+            >
+              Add Friend
+            </b-btn>
+          </div>
+        </b-col>
+      <!-- Name + Add Friend button to here -->
+          <!-- Profile page description from here-->
           <b-container>
             <b-row>
               <b-col cols="12">
@@ -28,6 +43,7 @@
               </b-col>
             </b-row>
           </b-container>
+          <!-- Profile page description to here-->
     </b-container>
   </b-overlay>
 </template>
