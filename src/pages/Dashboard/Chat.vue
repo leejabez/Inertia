@@ -15,6 +15,23 @@
             class="px-2"
             :style="{ height: '200px' , overflow: 'auto' }"
           >
+          <div
+            style="display: flex; align-items: center; background-color: white"
+            class="mt-3 mx-3 mb-2"
+            >
+                  <b-avatar
+                    src="https://placekitten.com/300/300"
+                    class="bg-secondary"
+                  ></b-avatar>
+                  <div class=" " style="flex: 1; display: flex">
+                    <div
+                      class="text-left pl-2"
+                      style="flex: 1; display: flex; flex-direction: column"
+                    >
+                      <span class="font-weight-bold">Name</span>
+                      <span class="text-muted">Msg</span>
+                    </div>
+                  </div>
           </div>
         </div>
         </b-col>
