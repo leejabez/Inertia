@@ -21,6 +21,8 @@
             <div class="profile_pic mx-auto"></div>
             <p class="font-weight-bold mt-2">Anna</p>
             <b-btn
+              @click="handleAddFriend"
+              :disabled="sent"
               class="font-weight-bold bg-fer text-capitalize w-100 rounded-pill"
             >
               Add Friend
@@ -53,6 +55,9 @@
 export default {
   data() {
     return {
+      profile: null,
+      loading: false,
+      sent: false,
       characteristics: [
         {
           title: "Age",
@@ -76,6 +81,26 @@ export default {
       ]
     };
   },
+  methods: {
+    handleAddFriend() {
+      if (this.getUser) {
+        var t = this;
+        this.loading = true;
+        var batch = this.$fb.firestore().batch();
+        
+        
+        
+        batch.commit().then(function () {
+          t.loading = false;
+          t.sent = true;
+          alert("Friend Request Sent !");
+        });
+
+      } else {
+        alert("Please login to continue")
+      }
+    }
+  }
   
 };
 </script>
