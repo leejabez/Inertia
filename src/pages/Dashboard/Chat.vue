@@ -66,8 +66,25 @@
               </div>
             </div>
           </div>
-          </div>
           <!-- messages -->
+          <!-- send message button-->
+          <div class="text-right" ref="msg_box" style="position: relative">
+              <textarea
+                type="text"
+                class="write_message p-4"
+                placeholder="Type Message Here"
+                v-model="message"
+              />
+              <b-button
+                variant="primary"
+                class="rounded-circle send_btn"
+                size="lg"
+                @click="sendMessage"
+              >
+                <i class="mdi mdi-send h6"></i>
+              </b-button>
+            </div>
+          </div>
           <div
             v-else
             class="p-4 h-100 justify-content-center"
@@ -95,6 +112,21 @@ export default {
   methods: {
     setLoaded() {
       this.loadedContact = true;
+    },
+    sendMessage() {
+      if (this.message) {
+        this.$store
+          .dispatch("sendMessage", {
+            message: this.message,
+            loadedContact: this.loadedContact,
+          })
+          .then(() => {
+            this.message = null;
+          })
+          .catch((err) => {
+            alert("error while sending message" + err);
+          });
+      }
     }
   }
 }
@@ -103,6 +135,25 @@ export default {
 <style>
 .search_input {
   filter: drop-shadow(0px 0px 25px rgba(0, 0, 0, 0.15));
+}
+
+.write_message {
+  background: #dee5ef;
+  opacity: 0.4;
+  border-radius: 24px;
+  outline: none;
+  border: none;
+  height: 144px;
+  color: black;
+  width: 90%;
+}
+
+.send_btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 14px;
+  margin-right: 19px;
 }
 
 </style>
