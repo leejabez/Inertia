@@ -81,6 +81,19 @@ export default {
       ]
     };
   },
+  watch : {
+    getLoadedProfile: {
+      handler(val) {
+        if (val) {
+          this.profile = val;
+        } else {
+          this.$router.replace("/discover");
+        }
+      },
+      immediate: true
+    }
+
+  },
   methods: {
     handleAddFriend() {
       if (this.getUser) {
