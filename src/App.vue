@@ -1,5 +1,5 @@
 <template>
-   <div id="app" style="display: flex; flex-direction: column; height: 100vh">
+  <div id="app">
     <h1> Home Page </h1>
      <header-view />
     <div>

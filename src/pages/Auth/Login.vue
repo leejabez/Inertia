@@ -70,9 +70,5 @@ export default {
 </script>
 
 <style>
-.login_img {
-  background: url("../../assets/login_img.png") no-repeat;
-  background-position: center;
-  background-size: cover;
-}
+
 </style>
