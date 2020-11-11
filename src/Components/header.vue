@@ -113,5 +113,16 @@ export default {
 </script>
 
 <style lang="scss">
-
+.nav_item a {
+  color: #0094b6 !important;
+}
+.nav_item_active a {
+  color: #000000 !important;
+  font-weight: 700;
+}
+.nav_btn {
+  background: #0094b6 !important;
+}
+#request-dropdown {
+}
 </style>
