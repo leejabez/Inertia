@@ -19,6 +19,24 @@
             
                   </b-col>
                 </template>
+                <!-- Users added from database from here -->
+                <template  v-for="(v, k) in allUsers">
+                 <b-col
+              v-if="(getUser && v.uid !== getUser.uid) || !getUser"
+                cols="6"
+                md="4"
+                lg="4"
+                xl="3"
+                class="mb-4 text-center"
+                :key="k"
+              >
+           
+                <div  @click="loadProfile(v)" style="cursor:pointer" class="profile_pic mx-auto"></div>
+                <p  @click="loadProfile(v)" style="cursor:pointer" class="font-weight-bold mt-2">{{ v.name }}</p>
+
+              </b-col>
+              </template>
+              <!-- Users added from database to here -->
               
               </b-row>
             </b-container>
@@ -34,8 +52,31 @@
 export default {
   data() {
     return {
+      allUsers: []
     };
   },
+  methods: {
+    loadProfile(p) {
+      this.$store.commit('setLoadedProfile',p)
+      this.$router.push('/profile')
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$fb
+        .firestore()
+        .collection("users")
+        .get()
+        .then((users) => {
+          var arr = [];
+          users.forEach((user) => {
+            arr.push(user.data());
+          });
+          console.log(arr);
+          this.allUsers = arr;
+        });
+    });
+  }
   
 };
 </script>
