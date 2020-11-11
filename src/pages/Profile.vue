@@ -53,6 +53,7 @@
 
 <script>
 import firebase from "firebase"
+import {mapGetters} from "vuex"
 
 export default {
   data() {
@@ -82,6 +83,9 @@ export default {
         }
       ]
     };
+  },
+  computed : {
+    ...mapGetters(["getLoadedProfile"])
   },
   watch : {
     getLoadedProfile: {
