@@ -161,6 +161,43 @@ export default {
       },
       immediate: true,
     },
+  },methods: {
+    setEditDialog() {
+      this.openEditDialog = true;
+      this.modalValue = this.todayNote.text || "";
+    },
+    saveTodayJournal() {
+      this.loading = true;
+      var that = this;
+      var ref = this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        .collection("journals");
+
+      var doc = this.todayNote.id ? this.todayNote.id : ref.doc().id;
+
+      ref
+        .doc(doc)
+        .set({
+          id: doc,
+          text: that.modalValue,
+          day: that.todayValue,
+        })
+        .then(() => {
+          that.loading = false;
+          that.openEditDialog = false;
+        })
+        .catch((err) => {
+          alert("An error occured while saving journal" + err);
+          that.loading = false;
+        });
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.selectedDate = new Date();
+    });
   }
 }
 </script>
