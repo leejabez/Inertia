@@ -81,7 +81,46 @@
 
 <script>
 export default {
-    
+    computed: {
+    todayValue() {
+      var d = new Date(this.selectedDate);
+      var months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+    },
+    yesterDayValue() {
+      var td = new Date(this.selectedDate);
+      var d = new Date(td.setDate(td.getDate() - 1));
+      var months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+
+      return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+    }
+    }
 }
 </script>
 
