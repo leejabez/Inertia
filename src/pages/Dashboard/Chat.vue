@@ -115,6 +115,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+computed: {
+    mapGetters(["getFriendsList"])
+}
 export default {
   data() {
     return {
