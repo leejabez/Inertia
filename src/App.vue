@@ -1,22 +1,49 @@
 <template>
-  <div id="app" style="display: flex; flex-direction: column; height: 100vh">
-    <Profile/>
-    
+  <div id="app">
+    <h1> Home Page </h1>
+     <header-view />
+    <div>
+                <div
+                  style="display: flex; align-items: center; cursor: pointer"
+                  class="pb-1 border-bottom"
+                  @click="loadedContact = null"
+                >
+                  <i
+                    class="mdi mdi-chevron-left"
+                    style="line-height: 35px; font-size: 35px"
+                  ></i>
+                  <b-avatar class="bg-secondary"></b-avatar>
+                  <div class=" " style="flex: 1; display: flex">
+                    <div
+                      class="text-left pl-2"
+                      style="flex: 1; display: flex; flex-direction: column"
+                    >
+                      <span class="font-weight-bold">{{
+                        loadedContact.name
+                      }}</span>
+                      <span class="text-muted"
+                        >status . Last seen 2 hour ago</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
   </div>
 </template>
 
 <script>
-import Profile from './pages/Profile.vue'
+import headerView from "@/components/header";
+
 export default {
-  name: "App",
-  components: {
-    Profile
-  },
-};
+    components: {
+    headerView,
+    }
+}
 </script>
 
-<style>
-@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.8.55/css/materialdesignicons.min.css');
+<style lang="scss" scoped >
+@import url("https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.8.55/css/materialdesignicons.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@700&display=swap");
 @import url("./assets/scss/custom.scss");
 
 #app {
