@@ -101,5 +101,19 @@ export default {
 </script>
 
 <style>
-
+.main_journal {
+  background: url("../../assets/journal_bg.png") no-repeat top center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.calendar_custom
+  > .b-calendar
+  > div.b-calendar-inner
+  > div.b-calendar-grid
+  > div.b-calendar-grid-body {
+  display: none;
+}
 </style>
