@@ -39,5 +39,16 @@ export default {
 </script>
 
 <style>
+.hero {
+  background-image: url("../../assets/gradient.png");
+  min-height: 520px;
+  background-position-x: left;
+  background-position-y: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
+.nav_btn {
+  background: #0094b6 !important;
+}
 </style>
