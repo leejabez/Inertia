@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import firebase from "firebase"
+
 export default {
   data() {
     return {
@@ -101,8 +103,35 @@ export default {
         this.loading = true;
         var batch = this.$fb.firestore().batch();
         
-        
-        
+        var requestedTo = this.$fb
+          .firestore()
+          .collection("users")
+          .doc(this.profile.uid)
+          .collection("friends")
+          .doc(this.getUser.uid);
+
+        var requestedBy = this.$fb
+          .firestore()
+          .collection("users")
+          .doc(this.getUser.uid)
+          .collection("friends")
+          .doc(this.profile.uid);
+
+        batch.set(requestedTo, {
+          is_approved: false,
+          requested_on: firebase.firestore.Timestamp.fromDate(new Date()),
+          uid: t.getUser.uid,
+          requested: false,
+          name: t.getUser.name,
+        });
+        batch.set(requestedBy, {
+          is_approved: false,
+          requested_on: firebase.firestore.Timestamp.fromDate(new Date()),
+          uid: t.profile.uid,
+          requested: true,
+          name: t.profile.name,
+        });
+        // Commit the batch
         batch.commit().then(function () {
           t.loading = false;
           t.sent = true;
