@@ -22,12 +22,14 @@
   </div>
 </template>
 
-<script>
-export default {
-    
-}
-</script>
-
 <style>
+.full_bg {
+  background: url("../../assets/home_bg.png") no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 
+  min-height: 100vh;
+}
 </style>
