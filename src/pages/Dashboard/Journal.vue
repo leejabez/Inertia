@@ -1,4 +1,5 @@
 <template>
+<div class="main_journal">
         <div
       class=""
       style="padding: 150px; display: flex; justify-content: center"
@@ -49,6 +50,20 @@
         </div>
       </div>
     </div>
+
+ <b-modal
+      id="modal-center"
+      v-model="openEditDialog"
+      centered
+      hide-footer
+      no-close-on-backdrop
+      title="Edit Today's Journal"
+    >
+      <b-textarea
+        v-model="modalValue"
+        placeholder="Start writing here"
+      ></b-textarea>
+      </div>
 </template>
 
 <script>
