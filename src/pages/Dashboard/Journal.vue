@@ -81,7 +81,25 @@
 
 <script>
 export default {
-    
+    computed: {
+    todayValue() {
+      var d = new Date(this.selectedDate);
+      var months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+    }
 }
 </script>
 
