@@ -15,8 +15,10 @@
             class="px-2"
             :style="{ height: '200px' , overflow: 'auto' }"
           >
+          <template v-for="(v, k) in getFriendsList">
           <div
-                @click="setLoaded()"
+                @click="setLoaded(v)"
+                :key="k"
                 style="cursor: pointer"
                 class="chat_wrapper my-3 d-flex flex-column justify-content-around"
                 >
@@ -33,12 +35,12 @@
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
-                      <span class="font-weight-bold">Name</span>
-                      <span class="text-muted">Msg</span>
+                      <span class="font-weight-bold">{{v.name}}</span>
                     </div>
                   </div>
                   </div>
           </div>
+          </template>
         </div>
         </div>
         </b-col>
@@ -61,7 +63,7 @@
                   class="text-left pl-2"
                   style="flex: 1; display: flex; flex-direction: column"
                 >
-                  <span class="font-weight-bold">Name</span>
+                  <span class="font-weight-bold">{{loadedContact.name}}</span>
                 </div>
               </div>
             </div>
@@ -123,11 +125,14 @@ export default {
   data() {
     return {
       loadedContact: null,
+      message: null,
+      loadedMessages: []
     }
   },
   methods: {
-    setLoaded() {
-      this.loadedContact = true;
+    setLoaded(i) {
+      this.loadedContact = i;
+      //add array for messages
     },
     sendMessage() {
       if (this.message) {
