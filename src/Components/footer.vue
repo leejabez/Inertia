@@ -24,8 +24,21 @@
 
 <script>
 export default {
-    
-}
+  data() {
+    return {
+      links: [
+        { path: "/", name: "Home" },
+        { path: "/resources", name: "Resources" },
+      ],
+      logo: require("@/assets/logo.png"),
+    };
+  },
+  methods: {
+    signout() {
+      this.$fb.auth().signOut();
+    },
+  },
+};
 </script>
 
 <style lang="scss">
