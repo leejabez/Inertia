@@ -4,6 +4,16 @@
   </div>
 </template>
 
+<script>
+import headerView from "@/components/header";
+
+export default {
+    components: {
+    headerView,
+    }
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
