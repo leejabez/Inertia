@@ -20,6 +20,35 @@
           {{ yesterDayNote.text || "" }}
         </div>
       </div>
+
+      <div class="notes">
+        <div
+          class="border-bottom py-3 text-white font-weight-bold d-flex justify-content-between"
+        >
+          <div class="pl-4"></div>
+          <div>{{ todayValue }}</div>
+          <div class="pr-4" @click="setEditDialog">
+            <i
+              class="mdi mdi-circle-edit-outline h5"
+              style="cursor: pointer"
+            ></i>
+          </div>
+        </div>
+        <div
+          style="flex: 1; height: 320px; overflow: auto"
+          class="p-3 text-white font-weight-bold"
+        >
+          <p v-if="todayNote.text">
+          {{todayNote.text}}</p>
+          <div v-else class="h3 text-muted">
+            Write something really amazing
+            <div class="pt-5">
+              <i class="mdi mdi-circle-edit-outline display-1"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>
