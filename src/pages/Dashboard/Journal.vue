@@ -205,4 +205,21 @@ export default {
   > div.b-calendar-grid-body {
   display: none;
 }
+
+.c_c_default {
+  position: absolute;
+  top: 0;
+  left: 39%;
+  z-index: 1;
+}
+.notes {
+  width: 362px;
+  height: 465px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 1px solid white;
+  backdrop-filter: blur(19px);
+  display: flex;
+  flex-direction: column;
+}
 </style>
