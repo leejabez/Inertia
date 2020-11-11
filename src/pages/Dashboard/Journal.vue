@@ -135,7 +135,33 @@ export default {
 
       return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
     }
-    }
+    },  watch: {
+    selectedDate: {
+      handler(date) {
+        if (date && this.getUser) {
+          console.log("running now");
+          var u = this.getUser;
+          this.$fb
+            .firestore()
+            .collection("users")
+            .doc(u.uid)
+            .collection("journals")
+            .where("day", "in", [this.todayValue, this.yesterDayValue])
+            .onSnapshot((snap) => {
+              snap.forEach((res) => { 
+                var d = res.data();
+                if (d.day == this.todayValue) {
+                  this.todayNote = d;
+                } else {
+                  this.yesterDayNote = d;
+                }
+              });
+            });
+        }
+      },
+      immediate: true,
+    },
+  }
 }
 </script>
 
