@@ -63,6 +63,20 @@
         v-model="modalValue"
         placeholder="Start writing here"
       ></b-textarea>
+            <div class="text-right py-3">
+        <b-overlay
+          :show="loading"
+          rounded
+          opacity="0.6"
+          spinner-small
+          spinner-variant="primary"
+          class="d-inline-block"
+        >
+          <b-btn @click="saveTodayJournal" variant="primary">Save</b-btn>
+        </b-overlay>
+      </div>
+    </b-modal>
+  </div>
       </div>
 </template>
 
