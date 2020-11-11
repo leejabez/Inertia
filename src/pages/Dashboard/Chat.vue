@@ -67,6 +67,18 @@
             </div>
           </div>
           <!-- messages -->
+          <div
+            style="flex: 1; display: flex; flex-direction: column"
+            class="px-3"
+            ref="msg_container"
+          >
+            <div
+              :style="{ height: '200px', overflow: 'auto' }"
+              class="text-left"
+              v-chat-scroll
+            >
+          </div>
+          </div>
           <!-- send message button-->
           <div class="text-right" ref="msg_box" style="position: relative">
               <textarea
