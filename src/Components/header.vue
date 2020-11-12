@@ -108,6 +108,20 @@
 
 <script>
 export default {
+  data() {
+    return {
+      links: [
+        { path: "/resources", name: "Resources" },
+        { path: "/dashboard/chat", name: "Chat" },
+        { path: "/dashboard/journal", name: "Journal", auth: true },
+        { path: "/discover", name: "Discover" },
+        { path: "", name: "Health", auth: true },
+      ],
+      requests: [],
+      noRequest: false,
+      logowithname: require("@/assets/logowithname.png")
+    }
+  }
     
 }
 </script>
