@@ -53,7 +53,7 @@ const store = new Vuex.Store({
                     // handle error with no uid
                 }
             } else {
-                // handle friends that are already added.
+                // handle friends that already added
             }
         },
         sendMessage(s, p) {
