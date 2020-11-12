@@ -1,10 +1,40 @@
+import '@babel/polyfill'
+import 'mutationobserver-shim'
 import Vue from 'vue'
+import './plugins/bootstrap-vue'
 import App from './App.vue'
-import {BootstrapVue} from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+import './mixin'
 Vue.config.productionTip = false
+import router from './router'
+import store from './store'
+
+
+import VueChatScroll from 'vue-chat-scroll'
+import VCalendar from 'v-calendar';
+
+// Use v-calendar & v-date-picker components
+Vue.use(VCalendar, {
+    componentPrefix: 'vc' 
+});
+
+import '@babel/polyfill'
+import 'mutationobserver-shim'
+import Vue from 'vue'
+import './plugins/bootstrap-vue'
+import App from './App.vue'
+import './mixin'
+Vue.config.productionTip = false
+import router from './router'
+import store from './store'
+
+
+import VueChatScroll from 'vue-chat-scroll'
+import VCalendar from 'v-calendar';
+
+// Use v-calendar & v-date-picker components
+Vue.use(VCalendar, {
+    componentPrefix: 'vc' 
+});
 
 import firebase from 'firebase'
 var config = {
@@ -17,10 +47,33 @@ var config = {
     appId: "1:483684076839:web:0c6a68dc882b11228eed02",
     measurementId: "G-0D74VFMVGB"
 }
+
 firebase.initializeApp(config)
 Vue.prototype.$fb = firebase
 
-Vue.use(BootstrapVue)
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log('user logged in', user)
+        firebase.firestore().collection('users').doc(user.uid).get().then((snap) => {
+            store.commit('setUser', snap.data())
+            router.replace('/dashboard')
+            mountNow()
+        }).catch(() => {
+            mountNow()
+            alert('An Error Occured OR You`re offline ')
+        })
+    } else {
+        console.log('not yet logged in')
+        store.commit('setUser', null)
+        router.replace('/')
+        mountNow()
+    }
+
+    function mountNow() {
+        new Vue({
+            store,
+            router,
+            render: h => h(App),
+        }).$mount('#app')
+    }
+})
