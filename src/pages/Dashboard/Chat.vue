@@ -135,7 +135,21 @@ export default {
   methods: {
     setLoaded(i) {
       this.loadedContact = i;
-      //add array for messages
+      this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        .collection("friends")
+        .doc(i.uid)
+        .collection("messages")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) => {
+          var arr = [];
+          snapshot.forEach((snap) => {
+            arr.push(snap.data());
+          });
+          this.loadedMessages = arr;
+        });
     },
     sendMessage() {
       if (this.message) {
