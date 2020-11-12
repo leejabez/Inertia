@@ -30,5 +30,33 @@ const store = new Vuex.Store({
         getFriendsList: (s) => {
             return s.friendsList
         }
+    },
+    actions: {
+        subscribeToFriendsList(s) {
+            if (!s.state.friendsList.length) {
+                var uid = s.getters.getUser ? s.getters.getUser.uid : null
+                if (uid) {
+                    console.log('subscribing to the frndx list')
+                    firebase
+                        .firestore()
+                        .collection("users")
+                        .doc(uid)
+                        .collection("friends")
+                        .onSnapshot((snapshot) => {
+                            var arr = [];
+                            snapshot.forEach((snap) => {
+                                arr.push(snap.data());
+                            });
+                            s.commit('setFriendsList', arr)
+                        });
+                } else {
+                    // handle error with no uid
+                }
+            } else {
+                // handle friends that are already added.
+            }
+        },
     }
 })
+
+export default store
