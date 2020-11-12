@@ -56,6 +56,74 @@ const store = new Vuex.Store({
                 // handle friends that are already added.
             }
         },
+        sendMessage(s, p) {
+
+            return new Promise((resolve, reject) => {
+                var m = p.message;
+                var uid = s.getters.getUser.uid
+                var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
+                var batch = firebase.firestore().batch();
+                var key = firebase
+                    .firestore()
+                    .collection("users")
+                    .doc(uid)
+                    .collection("friends")
+                    .doc(p.loadedContact.uid)
+                    .collection("messages")
+                    .doc().id;
+
+                var sentCopyForUser = firebase
+                    .firestore()
+                    .collection("users")
+                    .doc(uid)
+                    .collection("friends")
+                    .doc(p.loadedContact.uid)
+                    .collection("messages")
+                    .doc(key);
+
+                var sentCopyForSender = firebase
+                    .firestore()
+                    .collection("users")
+                    .doc(p.loadedContact.uid)
+                    .collection("friends")
+                    .doc(uid)
+                    .collection("messages")
+                    .doc(key);
+
+                var updateRootCopyForSender = firebase
+                    .firestore()
+                    .collection("users")
+                    .doc(p.loadedContact.uid)
+                    .collection("friends")  
+                    .doc(uid);
+
+                batch.set(sentCopyForUser, {
+                    message: m,
+                    timestamp,
+                    sent: true,
+                });
+
+                batch.set(sentCopyForSender, {
+                    message: m,
+                    received: true,
+                    timestamp,
+                });
+
+                batch.update(updateRootCopyForSender, {
+                    last_message: m,
+                    last_message_at: timestamp,
+                });
+                batch
+                    .commit()
+                    .then(() => {
+                        resolve()
+                    })
+                    .catch((err) => {
+                        alert("message sending failed " + err);
+                        reject(err)
+                    });
+            })
+        },
     }
 })
 
