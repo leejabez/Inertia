@@ -35,12 +35,9 @@
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
-                      <span class="font-weight-bold" style="color:white">Hi</span>
                       <span class="font-weight-bold">{{v.name}}</span>
-                      <span class="font-weight-bold" style="color:white">Hi</span>
-                    </div>
                   </div>
-                  </div>
+                </div>
           </div>
           </template>
         </div>
@@ -90,7 +87,7 @@
                 class="write_message p-4"
                 placeholder="Type Message Here"
                 v-model="message"
-                box-shadow: 10px 10px 5px #ccc;
+                style ="box-shadow: 10px 10px 5px #ccc"
               />
               <b-button
                 variant="info"
@@ -135,7 +132,21 @@ export default {
   methods: {
     setLoaded(i) {
       this.loadedContact = i;
-      //add array for messages
+      this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        .collection("friends")
+        .doc(i.uid)
+        .collection("messages")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) => {
+          var arr = [];
+          snapshot.forEach((snap) => {
+            arr.push(snap.data());
+          });
+          this.loadedMessages = arr;
+        });
     },
     sendMessage() {
       if (this.message) {
