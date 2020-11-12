@@ -6,7 +6,7 @@
         md="4"
         lg="3"
         class="pt-4 h-100"
-        style="background-color: #e5e5e5; display: flex; flex-direction: column"
+        style="background-color: #F8F6FA; display: flex; flex-direction: column"
       >
         <b-input placeholder="Search" class="rounded-pill search_input">
         </b-input>
@@ -23,7 +23,7 @@
                 class="chat_wrapper my-3 d-flex flex-column justify-content-around"
                 >
           <div
-            style="display: flex; align-items: center; background-color: white"
+            style="display: flex; align-items: center; background-color: white, border-radius:10px;"
             class="mt-3 mx-3 mb-2"
             >
                   <b-avatar
@@ -35,7 +35,9 @@
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
+                      <span class="font-weight-bold" style="color:white">Hi</span>
                       <span class="font-weight-bold">{{v.name}}</span>
+                      <span class="font-weight-bold" style="color:white">Hi</span>
                     </div>
                   </div>
                   </div>
@@ -90,7 +92,7 @@
                 v-model="message"
               />
               <b-button
-                variant="primary"
+                variant="info"
                 class="rounded-circle send_btn"
                 size="lg"
                 @click="sendMessage"
