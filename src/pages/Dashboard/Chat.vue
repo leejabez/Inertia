@@ -35,10 +35,12 @@
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
-                      <span class="font-weight-bold" style="color:white">Hi</span>
                       <span class="font-weight-bold">{{v.name}}</span>
-                      <span class="font-weight-bold" style="color:white">Hi</span>
                     </div>
+                    <div class="d-flex align-items-center text-muted">
+                      {{ formatedDate(v.last_message_at) }}
+                    </div>
+                  </div>
                   </div>
                   </div>
           </div>
