@@ -59,7 +59,6 @@ firebase.auth().onAuthStateChanged((user) => {
     }
 })
 
-test
 
 
 
