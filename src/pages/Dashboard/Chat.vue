@@ -35,10 +35,12 @@
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
-                      <span class="font-weight-bold" style="color:white">Hi</span>
                       <span class="font-weight-bold">{{v.name}}</span>
-                      <span class="font-weight-bold" style="color:white">Hi</span>
                     </div>
+                    <div class="d-flex align-items-center text-muted">
+                      {{ formatedDate(v.last_message_at) }}
+                    </div>
+                  </div>
                   </div>
                   </div>
           </div>
@@ -135,7 +137,21 @@ export default {
   methods: {
     setLoaded(i) {
       this.loadedContact = i;
-      //add array for messages
+      this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        .collection("friends")
+        .doc(i.uid)
+        .collection("messages")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) => {
+          var arr = [];
+          snapshot.forEach((snap) => {
+            arr.push(snap.data());
+          });
+          this.loadedMessages = arr;
+        });
     },
     sendMessage() {
       if (this.message) {
