@@ -6,7 +6,7 @@
         md="4"
         lg="3"
         class="pt-4 h-100"
-        style="background-color: #e5e5e5; display: flex; flex-direction: column"
+        style="background-color: #f2f5f9; display: flex; flex-direction: column"
       >
         <b-input placeholder="Search" class="rounded-pill search_input">
         </b-input>
@@ -23,7 +23,7 @@
                 class="chat_wrapper my-3 d-flex flex-column justify-content-around"
                 >
           <div
-            style="display: flex; align-items: center; background-color: white"
+            style="display: flex; align-items: center; background-color: white, border-radius:10px;"
             class="mt-3 mx-3 mb-2"
             >
                   <b-avatar
@@ -35,7 +35,9 @@
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
+                      <span class="font-weight-bold" style="color:white">Hi</span>
                       <span class="font-weight-bold">{{v.name}}</span>
+                      <span class="font-weight-bold" style="color:white">Hi</span>
                     </div>
                   </div>
                   </div>
@@ -88,9 +90,10 @@
                 class="write_message p-4"
                 placeholder="Type Message Here"
                 v-model="message"
+                box-shadow: 10px 10px 5px #ccc;
               />
               <b-button
-                variant="primary"
+                variant="info"
                 class="rounded-circle send_btn"
                 size="lg"
                 @click="sendMessage"
@@ -104,7 +107,7 @@
             class="p-4 h-100 justify-content-center"
             style="display: flex; flex-direction: column"
           >
-        <h2 class="text-muted">
+        <h2 class="text-primary">
             <div>
               <i class="mdi mdi-message display-1"></i>
             </div>
@@ -156,6 +159,13 @@ export default {
 <style>
 .search_input {
   filter: drop-shadow(0px 0px 25px rgba(0, 0, 0, 0.15));
+}
+
+.chat_wrapper {
+  background: #ffffff;
+  box-shadow: 0px 3px 6px rgba(75, 81, 91, 0.15),
+    0px 1px 3px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
 }
 
 .write_message {
