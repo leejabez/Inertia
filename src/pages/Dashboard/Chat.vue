@@ -42,8 +42,15 @@
                     </div>
                   </div>
                   </div>
+                  <div class="d-flex justify-content-between mx-3 mb-2">
+                  <div class="font-weight-bold">{{ v.last_message }}</div>
+                  <div>
+                    <b-badge variant="primary" v-if="v.unread_messages" pill
+                      >{{ v.unread_message }}
+                    </b-badge>
                   </div>
-          </div>
+                </div>
+                  </div>
           </template>
         </div>
         </div>
