@@ -90,6 +90,18 @@
               class="text-left"
               v-chat-scroll
             >
+             <template v-for="(v, k) in loadedMessages">
+                <div
+                  :key="k"
+                  :class="[
+                    { 'text-left': v.received == true },
+                    { 'text-right': v.sent == true },
+                  ]"
+                >
+                <div class="message_container">
+                </div>
+                </div>
+                </template>   
           </div>
           </div>
           <!-- send message button-->
@@ -99,7 +111,7 @@
                 class="write_message p-4"
                 placeholder="Type Message Here"
                 v-model="message"
-                box-shadow: 10px 10px 5px #ccc;
+                style = "box-shadow: 10px 10px 5px #ccc"
               />
               <b-button
                 variant="info"
@@ -208,6 +220,12 @@ export default {
   right: 0;
   margin-bottom: 14px;
   margin-right: 19px;
+}
+
+.message_container {
+  min-height: 61px;
+  max-width: 70%;
+  display: inline-block;
 }
 
 </style>
