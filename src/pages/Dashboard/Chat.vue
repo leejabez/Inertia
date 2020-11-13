@@ -13,7 +13,7 @@
         <div style="flex: 1" class=" ">
           <div
             class="px-2"
-            :style="{ height: '200px' , overflow: 'auto' }"
+            :style="{ height: heightForFriends + 'px' , overflow: 'auto' }"
           >
           <template v-for="(v, k) in getFriendsList">
           <div
@@ -42,8 +42,15 @@
                     </div>
                   </div>
                   </div>
+                  <div class="d-flex justify-content-between mx-3 mb-2">
+                  <div class="font-weight-bold">{{ v.last_message }}</div>
+                  <div>
+                    <b-badge variant="primary" v-if="v.unread_messages" pill
+                      >{{ v.unread_message }}
+                    </b-badge>
                   </div>
-          </div>
+                </div>
+                  </div>
           </template>
         </div>
         </div>
@@ -79,10 +86,22 @@
             ref="msg_container"
           >
             <div
-              :style="{ height: '200px', overflow: 'auto' }"
+              :style="{ height: heightForMessages + 'px', overflow: 'auto' }"
               class="text-left"
               v-chat-scroll
             >
+             <template v-for="(v, k) in loadedMessages">
+                <div
+                  :key="k"
+                  :class="[
+                    { 'text-left': v.received == true },
+                    { 'text-right': v.sent == true },
+                  ]"
+                >
+                <div class="message_container">
+                </div>
+                </div>
+                </template>   
           </div>
           </div>
           <!-- send message button-->
@@ -92,7 +111,7 @@
                 class="write_message p-4"
                 placeholder="Type Message Here"
                 v-model="message"
-                box-shadow: 10px 10px 5px #ccc;
+                style = "box-shadow: 10px 10px 5px #ccc"
               />
               <b-button
                 variant="info"
@@ -129,10 +148,42 @@ computed: {
 export default {
   data() {
     return {
+      heightAvailable: false,
       loadedContact: null,
       message: null,
       loadedMessages: []
     }
+  },
+    computed: {
+    ...mapGetters(["getFriendsList"]),
+    heightForMessages() {
+      if (this.heightAvailable) {
+        var a = this.$refs;
+        var h = 100;
+        if (a.msg_container) {
+          h = a.msg_container.clientHeight - a.msg_box.clientHeight;
+        } else {
+          console.log("from else", this.$refs);
+        }
+        return h;
+      } else {
+        return 200;
+      }
+    },
+    heightForFriends() {
+      if (this.heightAvailable) {
+        var a = this.$refs;
+        var h = 100;
+        if (a.frnds_container) {
+          h = a.frnds_container.clientHeight;
+        } else {
+          console.log("from else", this.$refs);
+        }
+        return h;
+      } else {
+        return 200;
+      }
+    },
   },
   methods: {
     setLoaded(i) {
@@ -201,6 +252,12 @@ export default {
   right: 0;
   margin-bottom: 14px;
   margin-right: 19px;
+}
+
+.message_container {
+  min-height: 61px;
+  max-width: 70%;
+  display: inline-block;
 }
 
 </style>
