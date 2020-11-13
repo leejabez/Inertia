@@ -13,7 +13,7 @@
         <div style="flex: 1" class=" ">
           <div
             class="px-2"
-            :style="{ height: '200px' , overflow: 'auto' }"
+            :style="{ height: heightForFriends + 'px' , overflow: 'auto' }"
           >
           <template v-for="(v, k) in getFriendsList">
           <div
@@ -86,7 +86,7 @@
             ref="msg_container"
           >
             <div
-              :style="{ height: '200px', overflow: 'auto' }"
+              :style="{ height: heightForMessages + 'px', overflow: 'auto' }"
               class="text-left"
               v-chat-scroll
             >
@@ -148,10 +148,42 @@ computed: {
 export default {
   data() {
     return {
+      heightAvailable: false,
       loadedContact: null,
       message: null,
       loadedMessages: []
     }
+  },
+    computed: {
+    ...mapGetters(["getFriendsList"]),
+    heightForMessages() {
+      if (this.heightAvailable) {
+        var a = this.$refs;
+        var h = 100;
+        if (a.msg_container) {
+          h = a.msg_container.clientHeight - a.msg_box.clientHeight;
+        } else {
+          console.log("from else", this.$refs);
+        }
+        return h;
+      } else {
+        return 200;
+      }
+    },
+    heightForFriends() {
+      if (this.heightAvailable) {
+        var a = this.$refs;
+        var h = 100;
+        if (a.frnds_container) {
+          h = a.frnds_container.clientHeight;
+        } else {
+          console.log("from else", this.$refs);
+        }
+        return h;
+      } else {
+        return 200;
+      }
+    },
   },
   methods: {
     setLoaded(i) {
