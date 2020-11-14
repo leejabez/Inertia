@@ -33,9 +33,18 @@
 </template>
 
 <script>
+import footerView from "@/components/footer";
+
 export default {
-    
-}
+  data() {
+    return {
+      home_img: require("@/assets/home_img.png"),
+    };
+  },
+  components: {
+    footerView,
+  },
+};
 </script>
 
 <style>

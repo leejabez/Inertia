@@ -121,6 +121,90 @@ export default {
       noRequest: false,
       logowithname: require("@/assets/logowithname.png")
     }
+  },
+  methods: {
+    signout() {
+      this.$fb.auth().signOut();
+    },
+    
+    loadRequests() {
+      var t = this;
+      this.loadingRequests = true;
+      this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        
+        .collection("friends")
+        .where("is_approved", "==", false)
+        .onSnapshot((friends) => {
+          var arr = [];
+          friends.forEach((f) => {
+            arr.push(f.data());
+          });
+          t.requests = arr;
+          if (arr.length == 0) {
+            t.noRequest = true;
+          } else {
+            t.noRequest = false;
+          }
+          t.loadingRequests = false;
+        })
+        .catch(() => {
+          alert("Unable to load friend requests");
+        });
+    },
+    
+    accept(r) {
+      var batch = this.$fb.firestore().batch();
+
+      var requestedTo = this.$fb
+        .firestore()
+        .collection("users")
+        .doc(r.uid)
+        .collection("friends")
+        .doc(this.getUser.uid);
+
+      var requestedBy = this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        .collection("friends")
+        .doc(r.uid);
+
+      batch.update(requestedTo, {
+        is_approved: true,
+      });
+      batch.update(requestedBy, {
+        is_approved: true,
+      });
+
+      // Commit the batch
+      batch
+        .commit()
+        .then(() => {
+          alert("request approved successfully ! you can now start chatting");
+        })
+        .catch(() => {
+          alert("unexpected error in request approve !");
+        });
+    },
+
+    reject(r) {
+      this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        .collection("friends")
+        .doc(r.uid)
+        .delete()
+        .then(() => {
+          alert("Request rejected successfully ! ");
+        })
+        .catch(() => {
+          alert("unexpected error in request rejection !");
+        });
+    },
   }
     
 }
