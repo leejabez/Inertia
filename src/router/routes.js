@@ -39,14 +39,14 @@ export default [{
         path: '/discover',
         component: Discover,
         meta: {
-            // auth: true
+
         },
     },
     {
         path: '/profile',
         component: Profile,
         meta: {
-            // auth: true
+
         },
     },
 

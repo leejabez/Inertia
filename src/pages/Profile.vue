@@ -21,6 +21,8 @@
             <div class="profile_pic mx-auto"></div>
             <p class="font-weight-bold mt-2">Anna</p>
             <b-btn
+              @click="handleAddFriend"
+              :disabled="sent"
               class="font-weight-bold bg-fer text-capitalize w-100 rounded-pill"
             >
               Add Friend
@@ -50,9 +52,15 @@
 </template>
 
 <script>
+import firebase from "firebase"
+import {mapGetters} from "vuex"
+
 export default {
   data() {
     return {
+      profile: null,
+      loading: false,
+      sent: false,
       characteristics: [
         {
           title: "Age",
@@ -76,6 +84,69 @@ export default {
       ]
     };
   },
+  computed : {
+    ...mapGetters(["getLoadedProfile"])
+  },
+  watch : {
+    getLoadedProfile: {
+      handler(val) {
+        if (val) {
+          this.profile = val;
+        } else {
+          this.$router.replace("/discover");
+        }
+      },
+      immediate: true
+    }
+
+  },
+  methods: {
+    handleAddFriend() {
+      if (this.getUser) {
+        var t = this;
+        this.loading = true;
+        var batch = this.$fb.firestore().batch();
+        
+        var requestedTo = this.$fb
+          .firestore()
+          .collection("users")
+          .doc(this.profile.uid)
+          .collection("friends")
+          .doc(this.getUser.uid);
+
+        var requestedBy = this.$fb
+          .firestore()
+          .collection("users")
+          .doc(this.getUser.uid)
+          .collection("friends")
+          .doc(this.profile.uid);
+
+        batch.set(requestedTo, {
+          is_approved: false,
+          requested_on: firebase.firestore.Timestamp.fromDate(new Date()),
+          uid: t.getUser.uid,
+          requested: false,
+          name: t.getUser.name,
+        });
+        batch.set(requestedBy, {
+          is_approved: false,
+          requested_on: firebase.firestore.Timestamp.fromDate(new Date()),
+          uid: t.profile.uid,
+          requested: true,
+          name: t.profile.name,
+        });
+        // Commit the batch
+        batch.commit().then(function () {
+          t.loading = false;
+          t.sent = true;
+          alert("Friend Request Sent !");
+        });
+
+      } else {
+        alert("Please login to continue")
+      }
+    }
+  }
   
 };
 </script>
