@@ -81,7 +81,52 @@ export default {
             return i;
           })
         );
-    }
+    },   
+    toggleBlockFriend(v) {
+      this.loading = true;
+      var val = v.blocked_by_me != null ? !v.blocked_by_me : true;
+      var batch = this.$fb.firestore().batch();
+      var frndRef = this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        .collection("friends")
+        .doc(v.uid);
+
+      var frndToBeBlockedRef = this.$fb
+        .firestore()
+        .collection("users")
+        .doc(v.uid)
+        .collection("friends")
+        .doc(this.getUser.uid);
+      batch.update(frndRef, {
+        blocked_by_me: val,
+      });
+      batch.update(frndToBeBlockedRef, {
+        blocked_by_friend: val,
+      });
+
+      batch
+        .commit()
+        .then(() => {
+          this.$bvToast.toast(
+            `Friend ${!val ? "Un Blocked" : "Blocked"}   Successfully`,
+            {
+              title: `The Friend Has been ${
+                !val ? "Un Blocked" : "Blocked"
+              }  ! `,
+              autoHideDelay: 5000,
+              variant: "success",
+              appendToast: true,
+            }
+          );
+          this.loading = false;
+        })
+        .catch((err) => {
+          this.loading = false;
+          alert("An Error occured while deleting friend " + err.message);
+        });
+    },
   },  
   watch: {
     getFriendsList: {
