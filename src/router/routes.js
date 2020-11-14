@@ -43,6 +43,12 @@ export default [{
         },
     },
     {
+        path: '/resources',
+        component: Resources,
+        meta: {
+        },
+    },
+    {
         path: '/profile',
         component: Profile,
         meta: {
