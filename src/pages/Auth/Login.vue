@@ -11,7 +11,7 @@
           class="row h-100 justify-content-center bg-white align-items-center"
         >
           <b-form @submit="login" class="text-left">
-            <h6>Welcome Back</h6>
+            <h6>Welcome Back!</h6>
             <h2 class="font-weight-bold">Login to your account</h2>
             <b-form-group
               id="input-group-1"
@@ -51,8 +51,8 @@
             >
 
             <div class="text-center my-2">
-              Don't have an account ?
-              <router-link to="/signup">Join Today </router-link>
+              Don't have an account?
+              <router-link to="/signup">Join Today!</router-link>
             </div>
           </b-form>
         </b-col>

@@ -138,7 +138,6 @@
                   </div>
                 </div>
               </b-col>
-              <!-- received message  -->
               <b-col cols="12" md="6" lg="6" xl="6" class="py-3">
                 <div class="dashboard_card d-flex">
                   <div>
@@ -337,6 +336,7 @@ export default {
           })
         );
     },
+
     toggleBlockFriend(v) {
       this.loading = true;
       var val = v.blocked_by_me != null ? !v.blocked_by_me : true;

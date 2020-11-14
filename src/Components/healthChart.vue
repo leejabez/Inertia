@@ -1,5 +1,6 @@
 <script>
 import { Line } from "vue-chartjs";
+
 export default {
   extends: Line,
   data: () => ({
@@ -42,7 +43,8 @@ export default {
           radius: 1,
         },
       },
-scales: {
+
+      scales: {
         xAxes: [
           {
             ticks: {
@@ -68,6 +70,8 @@ scales: {
       },
     },
   }),
+
+
   methods: {
     renderTheChart() {
       var canvas = document.getElementById("line-chart");

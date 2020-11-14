@@ -1,6 +1,7 @@
+
 <template>
-<div class="main_journal">
-  <div
+  <div class="main_journal">
+    <div
       :class="[
         'd-inline-block c_c_default',
         { calendar_custom: !loadVisibleClass },
@@ -14,7 +15,7 @@
         locale="en-US"
       ></b-calendar>
     </div>
-        <div
+    <div
       class=""
       style="padding: 150px; display: flex; justify-content: center"
     >
@@ -22,7 +23,7 @@
         <div
           class="border-bottom py-3 text-white font-weight-bold d-flex justify-content-between"
         >
-          <div class="pl-4">
+          <div class="pl-4" @click="goPrevious">
             <i class="mdi mdi-chevron-left h4" style="cursor: pointer"></i>
           </div>
           <div>{{ yesterDayValue }}</div>
@@ -35,7 +36,6 @@
           {{ yesterDayNote.text || "" }}
         </div>
       </div>
-
       <div class="notes">
         <div
           class="border-bottom py-3 text-white font-weight-bold d-flex justify-content-between"
@@ -54,7 +54,8 @@
           class="p-3 text-white font-weight-bold"
         >
           <p v-if="todayNote.text">
-          {{todayNote.text}}</p>
+            {{ todayNote.text }}
+          </p>
           <div v-else class="h3 text-muted">
             Write something really amazing
             <div class="pt-5">
@@ -65,7 +66,7 @@
       </div>
     </div>
 
- <b-modal
+    <b-modal
       id="modal-center"
       v-model="openEditDialog"
       centered
@@ -95,7 +96,18 @@
 
 <script>
 export default {
-    computed: {
+  data() {
+    return {
+      modalValue: "",
+      openEditDialog: false,
+      loadVisibleClass: false,
+      selectedDate: "",
+      yesterDayNote: "",
+      todayNote: "",
+      loading: false,
+    };
+  },
+  computed: {
     todayValue() {
       var d = new Date(this.selectedDate);
       var months = [
@@ -133,36 +145,47 @@ export default {
       ];
 
       return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
-    }
     },
-    watch: {
+  },
+  watch: {
     selectedDate: {
       handler(date) {
         if (date && this.getUser) {
-          console.log("running now");
-          var u = this.getUser;
-          this.$fb
-            .firestore()
-            .collection("users")
-            .doc(u.uid)
-            .collection("journals")
-            .where("day", "in", [this.todayValue, this.yesterDayValue])
-            .onSnapshot((snap) => {
-              snap.forEach((res) => { 
-                var d = res.data();
-                if (d.day == this.todayValue) {
-                  this.todayNote = d;
-                } else {
-                  this.yesterDayNote = d;
-                }
-              });
-            });
+          this.refreshText();
         }
       },
       immediate: true,
     },
   },
   methods: {
+    goPrevious() {
+      console.log(new Date(this.selectedDate));
+      var a = new Date(this.selectedDate);
+      this.selectedDate = new Date(a.setDate(a.getDate() - 1));
+    },
+    refreshText() {
+      this.todayNote = "";
+      this.yesterDayNote = "";
+      var u = this.getUser;
+      this.$fb
+        .firestore()
+        .collection("users")
+        .doc(u.uid)
+        .collection("journals")
+        .where("day", "in", [this.todayValue, this.yesterDayValue])
+        .get()
+        .then((snap) => {
+          console.log("running now", snap.length);
+          snap.forEach((res) => {
+            var d = res.data();
+            if (d.day == this.todayValue) {
+              this.todayNote = d;
+            } else {
+              this.yesterDayNote = d;
+            }
+          });
+        });
+    },
     setEditDialog() {
       this.openEditDialog = true;
       this.modalValue = this.todayNote.text || "";
@@ -188,6 +211,7 @@ export default {
         .then(() => {
           that.loading = false;
           that.openEditDialog = false;
+          that.refreshText();
         })
         .catch((err) => {
           alert("An error occured while saving journal" + err);
@@ -219,7 +243,6 @@ export default {
   > div.b-calendar-grid-body {
   display: none;
 }
-
 .c_c_default {
   position: absolute;
   top: 0;
@@ -229,9 +252,10 @@ export default {
 .notes {
   width: 362px;
   height: 465px;
+  /* background: red; */
   margin: 10px;
   border-radius: 10px;
-  border: 1px solid white;
+  border: 1px solid black;
   backdrop-filter: blur(19px);
   display: flex;
   flex-direction: column;
