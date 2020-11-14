@@ -1,8 +1,7 @@
 <script>
 import { Line } from "vue-chartjs";
 export default {
-  methods: {
-      extends: Line,
+  extends: Line,
   data: () => ({
     chartdata: {
       labels: ["asdasd", "asdasd", "asdasd", "asdasd"],
@@ -43,7 +42,7 @@ export default {
           radius: 1,
         },
       },
-      scales: {
+scales: {
         xAxes: [
           {
             ticks: {
@@ -69,6 +68,7 @@ export default {
       },
     },
   }),
+  methods: {
     renderTheChart() {
       var canvas = document.getElementById("line-chart");
       console.log(canvas);
@@ -95,12 +95,14 @@ export default {
         "Nov",
         "Dec",
       ];
-      r.forEach((e) => {
-        series.push(e.rating);
-        var d = e.update_time.toDate();
-        console.log(d);
-        labels.push(monthNames[d.getMonth()] + " " + d.getDate());
-      });
+      if (r) {
+        r.forEach((e) => {
+          series.push(e.rating);
+          var d = e.update_time.toDate();
+          console.log(d);
+          labels.push(monthNames[d.getMonth()] + " " + d.getDate());
+        });
+      }
       console.log(series);
       console.log(labels);
       this.chartdata.labels = labels;

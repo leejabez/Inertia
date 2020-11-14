@@ -4,7 +4,7 @@
       <b-row class="py-4">
         <b-col cols="12" class="pb-4">
           <h2 style="color: #f9397e">
-            <span class="text-capitalize"> {{ getUser.name }}</span>'s Health
+            <span class="text-capitalize"> {{ getUser.name }} </span>'s Health
             <span stye="color:#F980ED"> <i class="mdi mdi-heart"></i></span>
           </h2>
         </b-col>
@@ -45,7 +45,8 @@
                         letter-spacing: 0.01em;
                         color: #a6acbe;
                       "
-                      >Friends</span>
+                      >Friends</span
+                    >
                   </div>
                 </div>
               </b-col>
@@ -137,6 +138,7 @@
                   </div>
                 </div>
               </b-col>
+              <!-- received message  -->
               <b-col cols="12" md="6" lg="6" xl="6" class="py-3">
                 <div class="dashboard_card d-flex">
                   <div>
@@ -200,17 +202,18 @@
                     :key="k"
                     class="d-flex justify-content-between"
                   >
-                    <div>
+                    <div style="align-items: center;
+    display: flex;">
                       <b-avatar
                         button
-                        variant="primary"
-                        text="FF"
+                        variant="primary" 
                         class="align-baseline"
+                          :src="v.userData.profile_pic_url || defaultProfilePic"
                       ></b-avatar>
-                      <span
+                      <div 
                         class="pl-2 font-weight-bold"
-                        style="color: #a6acbe"
-                        >{{ v.name }}</span
+                        style="color: #a6acbe; "
+                        >{{ v.userData.name }}</div
                       >
                     </div>
                     <div class="d-flex align-items-center">
@@ -452,7 +455,6 @@ export default {
   max-height: 569px;
 
   background: #ffffff;
-  /* Tables */
 
   box-shadow: 0px 3px 6px rgba(75, 81, 91, 0.15),
     0px 1px 3px rgba(0, 0, 0, 0.15);
