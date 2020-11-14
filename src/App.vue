@@ -18,7 +18,6 @@
                   class="mt-3 mx-3 mb-2"
                 >
                   <b-avatar
-                    
                     :src="v.userData.profile_pic_url || defaultProfilePic"
                     
                     class="bg-secondary"
