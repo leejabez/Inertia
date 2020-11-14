@@ -103,5 +103,22 @@ export default {
 </script>
 
 <style>
+.frnds_list {
+  max-height: 569px;
 
+  background: #ffffff;
+  /* Tables */
+
+  box-shadow: 0px 3px 6px rgba(75, 81, 91, 0.15),
+    0px 1px 3px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+.frnds_list_head {
+  padding: 21px 0px;
+  color: #6f52ed;
+}
+.frnds_list_content_scroll_area {
+  max-height: 420px;
+  overflow: auto;
+}
 </style>
