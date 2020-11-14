@@ -33,8 +33,7 @@
             >
               <template v-if="requests.length">
                 <b-dropdown-item v-for="(v, k) in requests" :key="k">
-                  <b-list-group v-if="!v.requested && !v.is_approved">
-                    <b-list-group-item>
+                  <div v-if="!v.requested && !v.is_approved">
                       <div>
                         <div>
                           <span class="float-left h6 font-weight-bold">
@@ -68,9 +67,9 @@
                             Reject
                           </b-btn>
                         </div>
-                      </div></b-list-group-item
-                    >
-                  </b-list-group>
+                      </div>
+                      <br />
+                      </div>
                 </b-dropdown-item>
               </template>
               <template v-else>
@@ -81,9 +80,12 @@
               </template>
             </b-dropdown>
           </b-nav-item>
-          <b-nav-item href="#"
+          <b-nav-item to="/dashboard/customize_profile"
             >{{ getUser.name || "" }}
-            <b-avatar variant="primary" text="IU"></b-avatar>
+            &nbsp;&nbsp;&nbsp;
+            <b-avatar
+              :src="getUser.profile_pic_url || defaultProfilePic"
+            ></b-avatar>
           </b-nav-item>
           <b-nav-item>
             <b-button @click="signout"> Signout </b-button>
@@ -107,6 +109,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -115,12 +118,29 @@ export default {
         { path: "/dashboard/chat", name: "Chat" },
         { path: "/dashboard/journal", name: "Journal", auth: true },
         { path: "/discover", name: "Discover" },
-        { path: "", name: "Health", auth: true },
+        { path: "/dashboard", name: "Health", auth: true },
       ],
       requests: [],
       noRequest: false,
       logowithname: require("@/assets/logowithname.png")
     }
+  },
+  computed: {
+    ...mapGetters(["getRequests"]),
+  },
+  mounted() {
+    this.$nextTick(() => {
+      var t = this;
+      this.$root.$on("bv::dropdown::show", (bvEvent) => {
+        if (bvEvent.componentId == "request-dropdown") {
+          if (!t.getRequests.length) {
+            t.loadRequests();
+          } else {
+            t.loadingRequests = false;
+          }
+        }
+      });
+    });
   },
   methods: {
     signout() {
