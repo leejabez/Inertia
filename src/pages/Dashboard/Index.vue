@@ -4,7 +4,7 @@
       <b-row class="py-4">
         <b-col cols="12" class="pb-4">
           <h2 style="color: #f9397e">
-            <span class="text-capitalize"> {{ getUser.name }} </span>'s Health
+            <span class="text-capitalize"> {{ getUser.name }}</span>'s Health
             <span stye="color:#F980ED"> <i class="mdi mdi-heart"></i></span>
           </h2>
         </b-col>
