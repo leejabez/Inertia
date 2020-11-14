@@ -79,6 +79,11 @@
         </div>
       </b-col>
     <b-row>
+        <profile-component
+      :showPopup="showUpload"
+      @uploaded="uploadProfilePic"
+      @toggle="showUpload = $event"
+    ></profile-component>
   </b-container>
 </template>
 
