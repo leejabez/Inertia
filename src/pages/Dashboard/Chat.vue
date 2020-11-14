@@ -82,6 +82,7 @@
                 class="bg-secondary"
                 :src="loadedContact.userData.profile_pic_url || defaultProfilePic"
               ></b-avatar>
+              
               <div class=" " style="flex: 1; display: flex">
                 <div
                   class="text-left pl-2"

@@ -84,12 +84,6 @@ export default {
 </script>
 
 <style>
-.discover {
-  background: url("../assets/discover.png") no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-attachment: fixed;
-}
 .profile_pic {
   width: 170px;
   height: 170px;
@@ -98,4 +92,11 @@ export default {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 45px;
 }
+.discover {
+  background: url("../assets/discover.png") no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
 </style>
