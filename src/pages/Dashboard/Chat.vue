@@ -292,6 +292,7 @@ export default {
     0px 1px 3px rgba(0, 0, 0, 0.15);
   border-radius: 6px;
 }
+
 .write_message {
   background: #dee5ef;
   opacity: 0.4;
@@ -302,6 +303,7 @@ export default {
   color: black;
   width: 90%;
 }
+
 .send_btn {
   position: absolute;
   bottom: 0;
@@ -309,6 +311,7 @@ export default {
   margin-bottom: 14px;
   margin-right: 19px;
 }
+
 .message_container {
   min-height: 61px;
   max-width: 70%;
@@ -319,6 +322,7 @@ export default {
   position: relative;
   overflow: hidden;
 }
+
 .message_box_right {
   color: white;
 }
@@ -337,10 +341,12 @@ export default {
 .message_box_left::before {
   background: url("../../assets/message.svg") no-repeat center center;
 }
+
 .message_box_right::before {
   background: url("../../assets/message_sent.svg") no-repeat center center;
   transform: rotateY(0.5turn);
 }
+
 .blocked_friend {
   background: grey;
   cursor: not-allowed !important;

@@ -1,10 +1,14 @@
 import Vue from 'vue'
+import firebase from 'firebase'
 import {
     mapGetters
 } from 'vuex'
 Vue.mixin({
     computed: {
-        ...mapGetters(['getUser'])
+        ...mapGetters(['getUser']),
+        loggedIn() {
+            return firebase.auth().currentUser;
+        },
     },
     data() {
         return {
@@ -12,6 +16,9 @@ Vue.mixin({
         }
     },
     methods: {
+        getProfile(uid) {
+            firebase.firestore().collection('users').doc(uid).get().then()
+        },
         formatedDate(d) {
             var today = new Date();
             if (d) {
