@@ -156,4 +156,10 @@ export default {
 };
 </script>
 
- 
+<style>
+.signup_img {
+  background: url("../../assets/signup_img.png") no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+</style>

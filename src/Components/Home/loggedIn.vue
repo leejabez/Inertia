@@ -8,7 +8,7 @@
         >
           <div>
             <h3>
-              Good Morning {{ getUser.name || "" }}, how are you feeling today?
+              Good Morning {{ getUser ?  getUser.name : "" }}, how are you feeling today?
             </h3>
             <div
               v-if="!isRatedForToday"
@@ -26,7 +26,7 @@
               </div>
             </div>
             <div v-else class="h4 feeling_text">
-              Your Today Feeling Rating Is {{ todayFeelingRating }}
+              Your Rating Is {{ todayFeelingRating }}
             </div>
           </div>
           <div>
@@ -36,7 +36,7 @@
             <em>- Plutarch</em>
           </div>
           <div>
-            <div class="h2">Do you have any task for today ?</div>
+            <div class="h2">Do you have any tasks for today?</div>
             <div class="d-flex mx-md-5 px-md-5">
               <input type="text" class="task_input" v-model="task" />
               <span class="ml-4">
@@ -47,7 +47,7 @@
                 ></i>
               </span>
             </div>
-            <div class="text-left mx-md-5 px-md-5 pt-3">
+            <div class="text-left mx-md-5 px-md-5 pt-3" v-if="getUser">
               <template v-for="(v, k) in getUser.tasks">
                 <b-form-checkbox
                   :key="k"
@@ -79,6 +79,7 @@ export default {
       task: null,
       ratingButtons: [
         { color: "red", rate: 1 },
+
         { color: "orange", rate: 2 },
         { color: "yellow", rate: 3 },
         { color: "#aed581", rate: 4 },
@@ -88,7 +89,7 @@ export default {
   },
   computed: {
     isRatedForToday() {
-      if (this.getUser.last_feeling_update) {
+      if (this.getUser && this.getUser.last_feeling_update) {
         var t = new Date().setHours(0, 0, 0, 0);
         var l_u_t = this.getUser.last_feeling_update;
         if (t == l_u_t.toDate().setHours(0, 0, 0, 0)) {
@@ -194,7 +195,9 @@ export default {
     },
   },
 };
+
 </script>
+
 <style>
 .full_bg {
   background: url("../../assets/home_bg.png") no-repeat center center;
@@ -205,6 +208,10 @@ export default {
 
   min-height: 100vh;
 }
+.feeling_text {
+  text-shadow: 0 0 20px #ffffff;
+  color: #FFEB3B;
+}
 .rating_btns {
   width: 30px;
   height: 30px;
@@ -214,10 +221,6 @@ export default {
   font-weight: 900;
   color: black;
 }
-.feeling_text {
-  text-shadow: 0 0 20px #ffffff;
-  color: #FFEB3B;
-}
 .task_input {
   width: 100%;
   border: none;
@@ -225,11 +228,12 @@ export default {
   border-bottom: 4px solid white;
   color: white;
 }
-.task_input:focus {
-  outline: none;
-}
 .done_text > label {
   color:white !important;
   text-decoration: line-through;
 }
+.task_input:focus {
+  outline: none;
+}
+
 </style>
