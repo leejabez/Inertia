@@ -20,14 +20,16 @@
                 @click="setLoaded(v)"
                 :key="k"
                 style="cursor: pointer"
-                class="chat_wrapper my-3 d-flex flex-column justify-content-around"
+                :class="['chat_wrapper my-3 d-flex flex-column justify-content-around',
+                  { blocked_friend: v.blocked_by_me || blocked_by_friend },
+                ]"
                 >
           <div
             style="display: flex; align-items: center; background-color: white, border-radius:10px;"
             class="mt-3 mx-3 mb-2"
             >
                   <b-avatar
-                    src="https://placekitten.com/300/300"
+                    :src="v.profile_pic_url || defaultProfilePic"
                     class="bg-secondary"
                   ></b-avatar>
                   <div class=" " style="flex: 1; display: flex">
@@ -55,11 +57,10 @@
         </div>
         </div>
         </b-col>
-        <b-col class="p-4 h-100"
-          style="display: flex; flex-direction: column">
+        <b-col cols="12" md="8" lg="9" class="h-100">>
           <div
           v-if="loadedContact"
-          class="p-4 h-100 justify-content-center"
+          class="p-4 h-100"
           style="display: flex; flex-direction: column"
           >
           <!-- messages header-->
@@ -68,7 +69,7 @@
               style="display: flex; align-items: center"
               class="px-3 pb-1 border-bottom"
             >
-              <b-avatar class="bg-secondary" src="https://placekitten.com/300/300"></b-avatar>
+              <b-avatar class="bg-secondary":src="loadedContact.profile_pic_url || defaultProfilePic">></b-avatar>
               <div class=" " style="flex: 1; display: flex">
                 <div
                   class="text-left pl-2"
@@ -99,6 +100,18 @@
                   ]"
                 >
                 <div class="message_container">
+                  <div
+                      :class="[
+                        'message_box  px-5 py-3',
+                        { message_box_left: v.received == true },
+                        { 'message_box_right ': v.sent == true },
+                      ]"
+                    >
+                      {{ v.message }}
+                    </div>
+                    <div class="text-right text-muted">
+                      {{ formatedDate(v.timestamp) }}
+                    </div>
                 </div>
                 </div>
                 </template>   
@@ -142,9 +155,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-computed: {
-    mapGetters(["getFriendsList"])
-}
 export default {
   data() {
     return {
@@ -187,6 +197,9 @@ export default {
   },
   methods: {
     setLoaded(i) {
+    this.loadedMessages = []
+    this.loadedContact = null
+    if (!i.blocked_by_me && !i.blocked_by_friend) {
       this.loadedContact = i;
       this.$fb
         .firestore()
@@ -203,6 +216,25 @@ export default {
           });
           this.loadedMessages = arr;
         });
+        } else {
+        this.$bvToast.toast(
+          ` ${
+            i.blocked_by_me
+              ? " This Friends is blocked by you "
+              : " Your Friends blocked  "
+          } `,
+          {
+            title: `${
+              i.blocked_by_me
+                ? " you have blocked this friend ! you can unblock on your dashboard "
+                : " Your Friends blocked you ! Can't laod Chat  "
+            } ! `,
+            autoHideDelay: 10000,
+            variant: "warning",
+            appendToast: true,
+          }
+        );
+      }
     },
     sendMessage() {
       if (this.message) {
@@ -219,7 +251,20 @@ export default {
           });
       }
     }
-  }
+  },
+  updated() {
+    if (this.$refs.msg_container && !this.heightAvailable) {
+      this.heightAvailable = true;
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      if (this.$refs.msg_container) {
+        this.heightAvailable = true;
+      }
+      this.$store.dispatch("subscribeToFriendsList");
+    });
+  },
 }
 </script>
 
