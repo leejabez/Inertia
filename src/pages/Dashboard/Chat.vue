@@ -30,6 +30,7 @@
             >
                   <b-avatar
                     :src="v.profile_pic_url || defaultProfilePic"
+      
                     class="bg-secondary"
                   ></b-avatar>
                   <div class=" " style="flex: 1; display: flex">
@@ -37,7 +38,7 @@
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
-                      <span class="font-weight-bold">{{v.name}}</span>
+                      <span class="font-weight-bold">{{ v.userData.name }}</span>
                     </div>
                     <div class="d-flex align-items-center text-muted">
                       {{ formatedDate(v.last_message_at) }}
@@ -80,7 +81,7 @@
                   class="text-left pl-2"
                   style="flex: 1; display: flex; flex-direction: column"
                 >
-                  <span class="font-weight-bold">{{loadedContact.name}}</span>
+                  <span class="font-weight-bold">{{ loadedContact.userData.name }}</span>
                 </div>
               </div>
             </div>
