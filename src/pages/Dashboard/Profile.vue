@@ -100,6 +100,42 @@ export default {
     components: {
         profileComponent,
     },
+    methods: {
+    save() {
+      this.loading = true;
+      var o = {
+        name: this.name,
+        age: this.age,
+        bio: this.bio,
+        hobbies: this.hobbies,
+        interests: this.interests,
+      };
+      this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        .update(o)
+        .then(() => {
+          this.loading = false;
+          this.isChanged = false;
+          this.$bvToast.toast(` Updated Successfully `, {
+            title: `Your Profile is updated ! `,
+            autoHideDelay: 10000,
+            variant: "success",
+            appendToast: true,
+          });
+        })
+        .catch((err) => {
+          this.loading = false;
+          this.$bvToast.toast(` An error while  Updating your profile `, {
+            title: err.message,
+            autoHideDelay: 10000,
+            variant: "danger",
+            appendToast: true,
+          });
+        });
+        }   
+    },
     mounted() {
     this.$nextTick(() => {
       this.name = this.getUser.name || null;
@@ -110,7 +146,6 @@ export default {
     });
     },
 }
-
 </script>
 
 <style>
