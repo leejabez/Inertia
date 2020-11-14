@@ -1,22 +1,24 @@
 <template>
-    <div>
-    <logged-in-view v-if="getUser" />
+  <div>
+    <logged-in-view v-if="loggedIn" />
     <logged-out-view v-else />
-    </div>
+  </div>
 </template>
 
 <script>
 import loggedInView from "@/components/Home/loggedIn";
 import loggedOutView from "@/components/Home/loggedOut";
+
 export default {
-    data() {
+  data() {
     return {};
   },
+  
   components: {
     loggedInView,
     loggedOutView,
-  }
-}
+  },
+};
 </script>
 
 <style>
