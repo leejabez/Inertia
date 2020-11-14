@@ -39,7 +39,6 @@
                   </div>
                 </div>
               </b-col>
-              <!-- request  -->
               <b-col cols="12" md="6" lg="6" xl="6" class="py-3">
                 <div class="dashboard_card d-flex">
                   <div>
@@ -124,6 +123,50 @@
                         color: #a6acbe;
                       "
                       >Sent Messages</span
+                    >
+                  </div>
+                </div>
+              </b-col>
+               <b-col cols="12" md="6" lg="6" xl="6" class="py-3">
+                <div class="dashboard_card d-flex">
+                  <div>
+                    <b-avatar
+                      style="
+                        background: rgba(255, 184, 0, 0.07);
+                        color: rgba(255, 184, 0);
+                      "
+                    >
+                      <i
+                        class="mdi mdi-message-arrow-right-outline"
+                        style="font-size: 28px; line-height: 28px"
+                      ></i>
+                    </b-avatar>
+                  </div>
+                  <div class="pl-3 pt-2">
+                    <span
+                      style="
+                        font-family: Heebo;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 28px;
+                        line-height: 24px;
+                        letter-spacing: 0.01em;
+                        color: #2e3b52;
+                      "
+                      >{{ getUser.received || 0 }}</span
+                    >
+                    <br />
+                    <span
+                      style="
+                        font-family: Heebo;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 14px;
+                        line-height: 21px;
+                        letter-spacing: 0.01em;
+                        color: #a6acbe;
+                      "
+                      >Received messages</span
                     >
                   </div>
                 </div>
