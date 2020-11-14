@@ -271,10 +271,32 @@
                 </div>
               </div>
             </div>             
-      </div>
+</b-overlay>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="12">
+          <div class="card">
+            <div class="card-header bg-white font-weight-bolder py-3 pl-5">
+              <span> Average Health Score </span>
+              <span> </span>
+            </div>
+            <div class="card-body">
+              <health-chart
+                :options="options"
+                class="col-md-12 p-0"
+              ></health-chart>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 
 <script>
+import healthChart from "../../components/healthChart";
+import { mapGetters } from "vuex";
 export default {
     components: {
     healthChart,
@@ -416,6 +438,17 @@ export default {
 </script>
 
 <style>
+.dashboard_card {
+  width: 100%;
+  height: 151px;
+  background: #ffffff;
+  box-shadow: 0px 3px 6px rgba(75, 81, 91, 0.15),
+    0px 1px 3px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+
+  padding-left: 47px;
+  align-items: center;
+}
 .frnds_list {
   max-height: 569px;
 
