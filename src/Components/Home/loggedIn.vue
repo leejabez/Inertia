@@ -8,7 +8,7 @@
         >
           <div>
             <h3>
-              Good Morning {{ getUser.name || "" }}, how are you feeling today?
+              Good Morning {{ getUser ?  getUser.name : "" }}, how are you feeling today?
             </h3>
             <div
               v-if="!isRatedForToday"
@@ -47,7 +47,7 @@
                 ></i>
               </span>
             </div>
-            <div class="text-left mx-md-5 px-md-5 pt-3">
+            <div class="text-left mx-md-5 px-md-5 pt-3" v-if="getUser">
               <template v-for="(v, k) in getUser.tasks">
                 <b-form-checkbox
                   :key="k"
@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     isRatedForToday() {
-      if (this.getUser.last_feeling_update) {
+      if (this.getUser && this.getUser.last_feeling_update) {
         var t = new Date().setHours(0, 0, 0, 0);
         var l_u_t = this.getUser.last_feeling_update;
         if (t == l_u_t.toDate().setHours(0, 0, 0, 0)) {
