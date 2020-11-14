@@ -15,7 +15,7 @@
               :to="v.path"
               :key="k"
               :class="['nav_item', { nav_item_active: $route.path == v.path }]"
-              >{{ v.name }}</b-nav-item
+              >{{ v.name || '--' }}</b-nav-item
             >
           </template>
         </b-navbar-nav>
@@ -31,45 +31,45 @@
               class="mx-md-2"
               lazy
             >
-              <template v-if="requests.length">
-                <b-dropdown-item v-for="(v, k) in requests" :key="k">
+              <template v-if="getRequests.length">
+                <b-dropdown-item v-for="(v, k) in getRequests" :key="k">
                   <div v-if="!v.requested && !v.is_approved">
+                    <div>
                       <div>
-                        <div>
-                          <span class="float-left h6 font-weight-bold">
-                            {{ v.name }}
-                          </span>
-                          <span class="float-right text-muted">
-                            {{
-                              v.requested_on.toDate().getDay() +
-                              "/" +
-                              v.requested_on.toDate().getMonth() +
-                              "/" +
-                              v.requested_on.toDate().getFullYear()
-                            }}
-                          </span>
-                        </div>
-                        <div class="d-flex justify-content-around w-100">
-                          <b-btn
-                            class="rounded-pill"
-                            size="sm"
-                            variant="primary"
-                            @click="accept(v)"
-                          >
-                            Accept
-                          </b-btn>
-                          <b-btn
-                            class="rounded-pill"
-                            size="sm"
-                            variant="danger"
-                            @click="reject(v)"
-                          >
-                            Reject
-                          </b-btn>
-                        </div>
+                        <span class="float-left h6 font-weight-bold">
+                          {{ v.name || '--' }}
+                        </span>
+                        <span class="float-right text-muted">
+                          {{
+                            v.requested_on.toDate().getDay() +
+                            "/" +
+                            v.requested_on.toDate().getMonth() +
+                            "/" +
+                            v.requested_on.toDate().getFullYear()
+                          }}
+                        </span>
                       </div>
-                      <br />
+                      <div class="d-flex justify-content-around w-100">
+                        <b-btn
+                          class="rounded-pill"
+                          size="sm"
+                          variant="primary"
+                          @click="accept(v)"
+                        >
+                          Accept
+                        </b-btn>
+                        <b-btn
+                          class="rounded-pill"
+                          size="sm"
+                          variant="danger"
+                          @click="reject(v)"
+                        >
+                          Reject
+                        </b-btn>
                       </div>
+                    </div>
+                    <br />
+                  </div>
                 </b-dropdown-item>
               </template>
               <template v-else>
@@ -120,10 +120,10 @@ export default {
         { path: "/discover", name: "Discover" },
         { path: "/dashboard", name: "Health", auth: true },
       ],
-      requests: [],
       noRequest: false,
-      logowithname: require("@/assets/logowithname.png")
-    }
+      loadingRequests: true,
+      logowithname: require("@/assets/logowithname.png"),
+    };
   },
   computed: {
     ...mapGetters(["getRequests"]),
@@ -143,38 +143,6 @@ export default {
     });
   },
   methods: {
-    signout() {
-      this.$fb.auth().signOut();
-    },
-    
-    loadRequests() {
-      var t = this;
-      this.loadingRequests = true;
-      this.$fb
-        .firestore()
-        .collection("users")
-        .doc(this.getUser.uid)
-        
-        .collection("friends")
-        .where("is_approved", "==", false)
-        .onSnapshot((friends) => {
-          var arr = [];
-          friends.forEach((f) => {
-            arr.push(f.data());
-          });
-          t.requests = arr;
-          if (arr.length == 0) {
-            t.noRequest = true;
-          } else {
-            t.noRequest = false;
-          }
-          t.loadingRequests = false;
-        })
-        .catch(() => {
-          alert("Unable to load friend requests");
-        });
-    },
-    
     accept(r) {
       var batch = this.$fb.firestore().batch();
 
@@ -209,7 +177,6 @@ export default {
           alert("unexpected error in request approve !");
         });
     },
-
     reject(r) {
       this.$fb
         .firestore()
@@ -225,9 +192,40 @@ export default {
           alert("unexpected error in request rejection !");
         });
     },
-  }
-    
-}
+    signout() {
+      this.$fb.auth().signOut();
+    },
+    loadRequests() {
+      // var t = this;
+      // this.loadingRequests = true;
+      // this.$fb
+      //   .firestore()
+      //   .collection("users")
+      //   .doc(this.getUser.uid)
+
+      //   .collection("friends")
+      //   .where("is_approved", "==", false)
+      //   .onSnapshot((friends) => {
+      //     var arr = [];
+      //     friends.forEach((f) => {
+      //       arr.push(f.data());
+      //     });
+      //     t.requests = arr;
+      //     if (arr.length == 0) {
+      //       t.noRequest = true;
+      //     } else {
+      //       t.noRequest = false;
+      //     }
+      //     t.loadingRequests = false;
+      //   })
+      //   .catch(() => {
+      //     alert("Unable to load friend requests");
+      //   });
+      console.log('here')
+      this.$store.dispatch("subscribeToRequests");
+    },
+  },
+};
 </script>
 
 <style lang="scss">
