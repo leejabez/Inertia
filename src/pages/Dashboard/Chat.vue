@@ -32,10 +32,7 @@
                   class="mt-3 mx-3 mb-2"
                 >
                   <b-avatar
-                    badge
-                    badge-left
-                    badge-top
-                    badge-variant="success"
+      
                     class="bg-secondary"
                     :src="v.userData.profile_pic_url || defaultProfilePic"
                   ></b-avatar>
