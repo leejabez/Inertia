@@ -1,6 +1,6 @@
 <template>
   <div style="background: #f8f8fb; height: 100%; min-height: 100vh">
-                  <b-container class="text-left">
+    <b-container class="text-left">
       <b-row class="py-4">
         <b-col cols="12" class="pb-4">
           <h2 style="color: #f9397e">
@@ -137,7 +137,7 @@
                   </div>
                 </div>
               </b-col>
-               <b-col cols="12" md="6" lg="6" xl="6" class="py-3">
+              <b-col cols="12" md="6" lg="6" xl="6" class="py-3">
                 <div class="dashboard_card d-flex">
                   <div>
                     <b-avatar
@@ -181,10 +181,10 @@
                   </div>
                 </div>
               </b-col>
-                               </b-row>
+            </b-row>
           </b-container>
         </b-col>
-         <b-col cols="12" md="4">
+        <b-col cols="12" md="4">
           <b-overlay :show="loading" class="frnds_list my-3">
             <div class="frnds_list_head pl-4 border-bottom">
               <h4>
@@ -261,7 +261,6 @@
                   </b-list-group-item>
                 </b-list-group>
               </div>
-              <!-- show more btn -->
               <div class="text-center frnds_list_content_show_more">
                 <div
                   class="btn font-weight-bold h5 text-muted"
@@ -270,8 +269,8 @@
                   show more
                 </div>
               </div>
-            </div>             
-</b-overlay>
+            </div>
+          </b-overlay>
         </b-col>
       </b-row>
       <b-row>
@@ -298,7 +297,7 @@
 import healthChart from "../../components/healthChart";
 import { mapGetters } from "vuex";
 export default {
-    components: {
+  components: {
     healthChart,
   },
 
@@ -334,7 +333,7 @@ export default {
             return i;
           })
         );
-    },   
+    },
     toggleBlockFriend(v) {
       this.loading = true;
       var val = v.blocked_by_me != null ? !v.blocked_by_me : true;
@@ -380,7 +379,7 @@ export default {
           alert("An Error occured while deleting friend " + err.message);
         });
     },
- deleteFriend(v) {
+    deleteFriend(v) {
       this.loading = true;
       var batch = this.$fb.firestore().batch();
       var frndRef = this.$fb
@@ -416,7 +415,7 @@ export default {
     },
   },
   computed: {
-        ...mapGetters(["getFriendsList", "getRequests"]),
+    ...mapGetters(["getFriendsList", "getRequests"]),
   },
   watch: {
     getFriendsList: {
@@ -433,8 +432,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch("subscribeToFriendsList");
-  }
-}
+  },
+};
 </script>
 
 <style>
