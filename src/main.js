@@ -17,6 +17,7 @@ Vue.use(VCalendar, {
     componentPrefix: 'vc' 
 });
 
+Vue.use(VueChatScroll)
 import firebase from 'firebase'
 var config = {
     apiKey: "AIzaSyCbvzP9x_fPQQacQmZyJBYxhqXuP8gURyE",
@@ -28,16 +29,15 @@ var config = {
     appId: "1:483684076839:web:0c6a68dc882b11228eed02",
     measurementId: "G-0D74VFMVGB"
 }
-
 firebase.initializeApp(config)
 Vue.prototype.$fb = firebase
 
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         console.log('user logged in', user)
-        firebase.firestore().collection('users').doc(user.uid).get().then((snap) => {
+        firebase.firestore().collection('users').doc(user.uid).onSnapshot((snap) => {
             store.commit('setUser', snap.data())
-            router.replace('/dashboard')
+            // router.replace('/dashboard')
             mountNow()
         }).catch(() => {
             mountNow()
