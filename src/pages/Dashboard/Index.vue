@@ -185,16 +185,92 @@
           </b-container>
         </b-col>
          <b-col cols="12" md="4">
-          <!-- base -->
           <b-overlay :show="loading" class="frnds_list my-3">
-            <!-- head -->
             <div class="frnds_list_head pl-4 border-bottom">
               <h4>
                 <i class="mdi mdi-account-group"></i>
                 <span class="pl-2">Friends</span>
               </h4>
             </div>
-                      
+            <div class="frnds_list_content">
+              <div class="frnds_list_content_scroll_area">
+                <b-list-group>
+                  <b-list-group-item
+                    v-for="(v, k) in frndsList"
+                    :key="k"
+                    class="d-flex justify-content-between"
+                  >
+                    <div>
+                      <b-avatar
+                        button
+                        variant="primary"
+                        text="FF"
+                        class="align-baseline"
+                      ></b-avatar>
+                      <span
+                        class="pl-2 font-weight-bold"
+                        style="color: #a6acbe"
+                        >{{ v.name }}</span
+                      >
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <b-button
+                        style="background: transparent; border: none"
+                        class="rounded-circle"
+                        size="sm"
+                        v-b-tooltip.top
+                        title="Delete Friend"
+                        @click="deleteFriend(v)"
+                      >
+                        <i
+                          class="mdi mdi-close-box-outline mx-2 text-danger"
+                          style="
+                            font-size: 25px;
+                            line-height: 25px;
+                            cursor: pointer;
+                          "
+                        ></i>
+                      </b-button>
+
+                      <b-button
+                        style="background: transparent; border: none"
+                        class="rounded-circle"
+                        size="sm"
+                        v-b-tooltip.top
+                        :title="
+                          v.blocked_by_me ? 'Unblock Friend' : 'Block Friend'
+                        "
+                        @click="toggleBlockFriend(v)"
+                      >
+                        <i
+                          :class="[
+                            'mdi  text-muted',
+                            { 'mdi-block-helper': !v.blocked_by_me },
+                            {
+                              'mdi-account-convert': v.blocked_by_me == true,
+                            },
+                          ]"
+                          style="
+                            font-size: 21px;
+                            line-height: 21px;
+                            cursor: pointer;
+                          "
+                        ></i>
+                      </b-button>
+                    </div>
+                  </b-list-group-item>
+                </b-list-group>
+              </div>
+              <!-- show more btn -->
+              <div class="text-center frnds_list_content_show_more">
+                <div
+                  class="btn font-weight-bold h5 text-muted"
+                  @click="loadMore"
+                >
+                  show more
+                </div>
+              </div>
+            </div>             
       </div>
 </template>
 
