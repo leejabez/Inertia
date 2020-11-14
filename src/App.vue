@@ -21,6 +21,7 @@
                     badge
                     badge-left
                     badge-top
+                    :src="v.userData.profile_pic_url || defaultProfilePic"
                     badge-variant="success"
                     class="bg-secondary"
                   ></b-avatar>
@@ -29,7 +30,7 @@
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
-                      <span class="font-weight-bold">{{ v.name }}</span>
+                      <span class="font-weight-bold">{{ v.userData.name }}</span>
                       <span class="text-muted">status</span>
                     </div>
                     <div class="d-flex align-items-center text-muted">
@@ -61,14 +62,17 @@
                     class="mdi mdi-chevron-left"
                     style="line-height: 35px; font-size: 35px"
                   ></i>
-                  <b-avatar class="bg-secondary"></b-avatar>
+                  <b-avatar
+                    class="bg-secondary"
+                    :src="loadedContact.userData.profile_pic_url || defaultProfilePic"
+                  ></b-avatar>
                   <div class=" " style="flex: 1; display: flex">
                     <div
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
                       <span class="font-weight-bold">{{
-                        loadedContact.name
+                        loadedContact.userData.name
                       }}</span>
                       <span class="text-muted"
                         >status . Last seen 2 hour ago</span
@@ -163,31 +167,10 @@ export default {
       loadedMessages: [],
     };
   },
-  computed: {
-    ...mapGetters(["getFriendsList"]),
-    shouldShowChatPopup() {
-      return this.getUser != null && this.$route.fullPath != "/dashboard/chat";
-    },
-  },
   methods: {
     activatePopup() {
       this.showChatPopup = !this.showChatPopup;
       this.$store.dispatch("subscribeToFriendsList");
-    },
-    sendMessage() {
-      if (this.message) {
-        this.$store
-          .dispatch("sendMessage", {
-            message: this.message,
-            loadedContact: this.loadedContact,
-          })
-          .then(() => {
-            this.message = null;
-          })
-          .catch((err) => {
-            alert("error while sending message" + err);
-          });
-      }
     },
     setLoaded(i) {
       this.loadedContact = i;
@@ -207,11 +190,34 @@ export default {
           this.loadedMessages = arr;
         });
     },
+    sendMessage() {
+      if (this.message) {
+        this.$store
+          .dispatch("sendMessage", {
+            message: this.message,
+            loadedContact: this.loadedContact,
+          })
+          .then(() => {
+            this.message = null;
+          })
+          .catch((err) => {
+            alert("error while sending message" + err);
+          });
+      }
+    },
+  computed: {
+    ...mapGetters(["getFriendsList"]),
+    shouldShowChatPopup() {
+      return this.getUser != null && this.$route.fullPath != "/dashboard/chat";
+    },
   },
+  
   components: {
     headerView,
   },
-};
+}
+}
+
 </script>
 
 <style lang="scss" scoped >
@@ -227,22 +233,20 @@ export default {
   color: #2c3e50;
 }
 .bg-fer {
-  background-color: #0094b6 !important;
+  background-color: #0094b6 ;
 }
 .text-fer {
-  color: #0094b6 !important;
+  color: #0094b6 ;
 }
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to  {
   opacity: 0;
 }
 .chat_popup_wrapper {
-  position: absolute;
-  /* width: 102px; */
-  /* height: 100px; */
+  position: fixed;
   bottom: 0;
   right: 0;
   margin-bottom: 3vh;
@@ -287,6 +291,13 @@ export default {
     color: black;
     width: 100%;
   }
+  .send_btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 0px;
+    margin-right: 2px;
+  }
   .write_message textarea {
     border-radius: 24px;
 
@@ -297,35 +308,27 @@ export default {
     outline: none;
     resize: none;
   }
-  .send_btn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin-bottom: 0px;
-    margin-right: 2px;
-  }
   .message_container {
     min-height: 61px;
     max-width: 90%;
 
     display: inline-block;
   }
-
   .message_box {
     position: relative;
     overflow: hidden;
+  }
+
+  .message_box_left {
+    color: black;
+    background: white;
+    border-radius: 69px;
   }
   .message_box_right {
     color: white;
     background: #0596b7;
     border-radius: 69px;
   }
-  .message_box_left {
-    color: black;
-    background: white;
-    border-radius: 69px;
-  }
 
 }
-
 </style>
