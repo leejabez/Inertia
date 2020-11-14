@@ -18,11 +18,9 @@
                   class="mt-3 mx-3 mb-2"
                 >
                   <b-avatar
-                    badge
-                    badge-left
-                    badge-top
+                    
                     :src="v.userData.profile_pic_url || defaultProfilePic"
-                    badge-variant="success"
+                    
                     class="bg-secondary"
                   ></b-avatar>
                   <div class=" " style="flex: 1; display: flex">
