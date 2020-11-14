@@ -7,7 +7,8 @@ const store = new Vuex.Store({
     state: {
         user: null,
         loadedProfile: null,
-        friendsList: []
+        friendsList: [],
+        request: []
     },
     mutations: {
         setUser: (s, p) => {
@@ -18,6 +19,9 @@ const store = new Vuex.Store({
         },
         setFriendsList: (s, p) => {
             s.friendsList = p
+        },
+        getRequests: (s, p) => {
+            s.request = p
         }
     },
     getters: {
@@ -29,6 +33,9 @@ const store = new Vuex.Store({
         },
         getFriendsList: (s) => {
             return s.friendsList
+        },
+        getRequests: (s) => {
+            return s.request
         }
     },
     actions: {
@@ -56,8 +63,27 @@ const store = new Vuex.Store({
                 // handle friends that already added
             }
         },
+        subscribeToRequests(s) {
+            if (!s.getters.getRequests.length) {
+                firebase
+                    .firestore()
+                    .collection("users")
+                    .doc(s.getters.getUser.uid)
+                    .collection("friends")
+                    .where("is_approved", "==", false)
+                    .onSnapshot((friends) => {
+                        var arr = [];
+                        friends.forEach((f) => {
+                            arr.push(f.data());
+                        });
+                        s.commit('setRequests', arr)
+                    })
+                    .catch(() => {
+                        alert("Unable to load friend requests");
+                    });
+            }
+        },
         sendMessage(s, p) {
-
             return new Promise((resolve, reject) => {
                 var m = p.message;
                 var uid = s.getters.getUser.uid
@@ -96,6 +122,24 @@ const store = new Vuex.Store({
                     .doc(p.loadedContact.uid)
                     .collection("friends")  
                     .doc(uid);
+                
+                var senderIncrement = firebase
+                .firestore()
+                .collection("users")
+                .doc(uid)
+
+                var receiverIncrement = firebase
+                    .firestore()
+                    .collection("users")
+                    .doc(p.loadedContact.uid)
+                
+                batch.update(senderIncrement, {
+                    sent: firebase.firestore.FieldValue.increment(1)
+                })
+
+                batch.update(receiverIncrement, {
+                    received: firebase.firestore.FieldValue.increment(1)
+                })
 
                 batch.set(sentCopyForUser, {
                     message: m,

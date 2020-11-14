@@ -8,12 +8,11 @@
 <script>
 import loggedInView from "@/components/Home/loggedIn";
 import loggedOutView from "@/components/Home/loggedOut";
-
 export default {
     data() {
     return {};
   },
-      components: {
+  components: {
     loggedInView,
     loggedOutView,
   }

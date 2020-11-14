@@ -7,6 +7,7 @@ import Discover from '../pages/Discover.vue'
 import Profile from '../pages/Profile.vue'
 import Journal from '../pages/Dashboard/Journal.vue'
 import DashboardIndex from '../pages/Dashboard/Index.vue'
+import UserProfile from '../pages/Dashboard/Profile.vue'
 import Resources  from '../pages/Resources.vue'
 
 export default [{
@@ -34,6 +35,9 @@ export default [{
         }, {
             path: 'journal',
             component: Journal
+        }, {
+            path: 'customize_profile',
+            component:UserProfile
         }, ]
     },
     {
@@ -42,11 +46,11 @@ export default [{
         meta: {
 
         },
-    },
-    {
+    }, {
         path: '/resources',
         component: Resources,
         meta: {
+
         },
     },
     {

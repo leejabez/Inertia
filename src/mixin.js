@@ -6,6 +6,11 @@ Vue.mixin({
     computed: {
         ...mapGetters(['getUser'])
     },
+    data() {
+        return {
+            defaultProfilePic: require("./assets/discover.png"),
+        }
+    },
     methods: {
         formatedDate(d) {
             var today = new Date();
