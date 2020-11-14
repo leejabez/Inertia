@@ -39,6 +39,51 @@
                   </div>
                 </div>
               </b-col>
+              <!-- request  -->
+              <b-col cols="12" md="6" lg="6" xl="6" class="py-3">
+                <div class="dashboard_card d-flex">
+                  <div>
+                    <b-avatar
+                      style="
+                        background: rgba(51, 214, 159, 0.07);
+                        color: rgba(51, 214, 159);
+                      "
+                    >
+                      <i
+                        class="mdi mdi-account-multiple-plus"
+                        style="font-size: 28px; line-height: 28px"
+                      ></i>
+                    </b-avatar>
+                  </div>
+                  <div class="pl-3 pt-2">
+                    <span
+                      style="
+                        font-family: Heebo;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 28px;
+                        line-height: 24px;
+                        letter-spacing: 0.01em;
+                        color: #2e3b52;
+                      "
+                      >{{ getRequests.length }}</span
+                    >
+                    <br />
+                    <span
+                      style="
+                        font-family: Heebo;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 14px;
+                        line-height: 21px;
+                        letter-spacing: 0.01em;
+                        color: #a6acbe;
+                      "
+                      >Friend Request</span
+                    >
+                  </div>
+                </div>
+              </b-col>
                       </b-row>
       </div>
 </template>
