@@ -7,6 +7,7 @@ import Discover from '../pages/Discover.vue'
 import Profile from '../pages/Profile.vue'
 import Journal from '../pages/Dashboard/Journal.vue'
 import DashboardIndex from '../pages/Dashboard/Index.vue'
+import Resources  from '../pages/Resources.vue'
 
 export default [{
         path: '/',
@@ -40,6 +41,12 @@ export default [{
         component: Discover,
         meta: {
 
+        },
+    },
+    {
+        path: '/resources',
+        component: Resources,
+        meta: {
         },
     },
     {

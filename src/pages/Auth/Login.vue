@@ -62,11 +62,48 @@
   </div>
 </template>
 
-
 <script>
+import footerView from "@/components/footer";
 export default {
-    
-}
+  data() {
+    return {
+      email: null,
+      password: null,
+      loading: false,
+      home_img: require("@/assets/home_img.png"),
+    };
+  },
+  computed: {
+    isValid() {
+      return this.email != null && this.password != null;
+    },
+  },
+  components: {
+    footerView,
+  },
+  methods: {
+    reset() {
+      this.loading = false;
+      this.email = null;
+      this.password = null;
+    },
+    login(e) {
+      e.preventDefault();
+      this.loading = true;
+      this.$fb
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+    this.$router.push("/dashboard");
+          this.reset();
+        })
+        .catch((err) => {
+          alert(err);
+          this.reset();
+        });
+    },
+  },
+};
 </script>
 
 <style>
