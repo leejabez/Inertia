@@ -2,6 +2,73 @@
 import { Line } from "vue-chartjs";
 export default {
   methods: {
+      extends: Line,
+  data: () => ({
+    chartdata: {
+      labels: ["asdasd", "asdasd", "asdasd", "asdasd"],
+      datasets: [
+        {
+          label: "Feelings Rating ",
+          borderColor: "",
+          data: [10, 30, 46, 2, 8, 50, 0],
+          fill: true,
+          pointBorderColor: "",
+          pointBackgroundColor: "",
+          pointHoverBackgroundColor: "",
+          pointHoverBorderColor: "",
+        },
+      ],
+    },
+
+    options: {
+      responsive: true,
+      title: {
+        display: false,
+        text: "Mode: index, intersect = false",
+      },
+      tooltips: {
+        mode: "index",
+        intersect: false,
+      },
+      hover: {
+        mode: "index",
+        intersect: false,
+      },
+      maintainAspectRatio: false,
+      legend: {
+        display: false,
+      },
+      elements: {
+        point: {
+          radius: 1,
+        },
+      },
+      scales: {
+        xAxes: [
+          {
+            ticks: {
+              autoSkip: false,
+              maxTicksLimit: 12,
+            },
+            gridLines: {
+              display: false,
+            },
+          },
+        ],
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+              stepSize: 1,
+              scaleSteps: 5,
+              scaleStepWidth: 5,
+              scaleStartValue: 0,
+            },
+          },
+        ],
+      },
+    },
+  }),
     renderTheChart() {
       var canvas = document.getElementById("line-chart");
       console.log(canvas);
