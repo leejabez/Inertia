@@ -45,7 +45,60 @@
 
 <script>
 export default {
-    
+    components: {
+    healthChart,
+  },
+
+  data() {
+    return {
+      loading: false,
+      series: [1, 2, 3, 4, 5, 3, 2, 5],
+      labels: ["asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd"],
+      options: {
+        chart: {
+          type: "area",
+          toolbar: {
+            show: false,
+          },
+        },
+
+        dataLabels: {
+          enabled: false,
+        },
+
+        xaxis: {
+          categories: [],
+        },
+      },
+      frndsList: [],
+    };
+  },
+  methods: {
+    loadMore() {
+      if (this.frndsList.length != this.getFriendsList.length)
+        this.frndsList = this.frndsList.concat(
+          this.getFriendsList.slice(this.frndsList.length, 10).map((i) => {
+            return i;
+          })
+        );
+    }
+  },  
+  watch: {
+    getFriendsList: {
+      handler(val) {
+        if (val) {
+          var ss = val;
+          this.frndsList = ss.slice(0, 10).map((i) => {
+            return i;
+          });
+        }
+      },
+      immediate: true,
+    },
+  },
+  mounted() {
+    this.$store.dispatch("subscribeToFriendsList");
+  }
 }
 </script>
 
