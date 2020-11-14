@@ -1,6 +1,16 @@
 <template>
   <div style="background: #f8f8fb; height: 100%; min-height: 100vh">
-                      <b-row>
+                  <b-container class="text-left">
+      <b-row class="py-4">
+        <b-col cols="12" class="pb-4">
+          <h2 style="color: #f9397e">
+            <span class="text-capitalize"> {{ getUser.name }} </span>'s Health
+            <span stye="color:#F980ED"> <i class="mdi mdi-heart"></i></span>
+          </h2>
+        </b-col>
+        <b-col cols="12" md="8">
+          <b-container>
+            <b-row>
               <b-col cols="12" md="6" lg="6" xl="6" class="py-3">
                 <div class="dashboard_card d-flex">
                   <div>
@@ -171,7 +181,20 @@
                   </div>
                 </div>
               </b-col>
-                      </b-row>
+                               </b-row>
+          </b-container>
+        </b-col>
+         <b-col cols="12" md="4">
+          <!-- base -->
+          <b-overlay :show="loading" class="frnds_list my-3">
+            <!-- head -->
+            <div class="frnds_list_head pl-4 border-bottom">
+              <h4>
+                <i class="mdi mdi-account-group"></i>
+                <span class="pl-2">Friends</span>
+              </h4>
+            </div>
+                      
       </div>
 </template>
 
