@@ -64,11 +64,26 @@
           </b-row>
         </b-container>
       </b-col>
+       <b-col cols="12" class="d-flex justify-content-center">
+        <div class="col-8 col-md-4">
+          <b-overlay :show="loading" class="w-100">
+            <b-button
+              @click="save"
+              variant="primary"
+              class="w-100 rounded-0"
+              :disabled="loading || !isChanged"
+            >
+              Save Changes
+            </b-button>
+          </b-overlay>
+        </div>
+      </b-col>
     <b-row>
   </b-container>
 </template>
 
 <script>
+import profileComponent from "../../components/profilePic";
 export default {
   data() {
         return {
@@ -79,7 +94,20 @@ export default {
         bio: null,
         hobbies: null,
         interests: null,
+        loading: false,
         }
+    },
+    components: {
+        profileComponent,
+    },
+    mounted() {
+    this.$nextTick(() => {
+      this.name = this.getUser.name || null;
+      this.age = this.getUser.age || null;
+      this.bio = this.getUser.bio || null;
+      this.hobbies = this.getUser.hobbies || null;
+      this.interests = this.getUser.interests || null;
+    });
     },
 }
 
