@@ -285,12 +285,14 @@ export default {
 .search_input {
   filter: drop-shadow(0px 0px 25px rgba(0, 0, 0, 0.15));
 }
+
 .chat_wrapper {
   background: #ffffff;
   box-shadow: 0px 3px 6px rgba(75, 81, 91, 0.15),
     0px 1px 3px rgba(0, 0, 0, 0.15);
   border-radius: 6px;
 }
+
 .write_message {
   background: #dee5ef;
   opacity: 0.4;
@@ -301,6 +303,7 @@ export default {
   color: black;
   width: 90%;
 }
+
 .send_btn {
   position: absolute;
   bottom: 0;
@@ -308,18 +311,22 @@ export default {
   margin-bottom: 14px;
   margin-right: 19px;
 }
+
 .message_container {
   min-height: 61px;
   max-width: 70%;
   display: inline-block;
 }
+
 .message_box {
   position: relative;
   overflow: hidden;
 }
+
 .message_box_right {
   color: white;
 }
+
 .message_box::before {
   content: "";
   position: absolute;
@@ -330,13 +337,16 @@ export default {
   z-index: -1;
   background-size: cover;
 }
+
 .message_box_left::before {
   background: url("../../assets/message.svg") no-repeat center center;
 }
+
 .message_box_right::before {
   background: url("../../assets/message_sent.svg") no-repeat center center;
   transform: rotateY(0.5turn);
 }
+
 .blocked_friend {
   background: grey;
   cursor: not-allowed !important;
