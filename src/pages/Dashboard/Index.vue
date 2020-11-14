@@ -127,7 +127,44 @@ export default {
           alert("An Error occured while deleting friend " + err.message);
         });
     },
-  },  
+ deleteFriend(v) {
+      this.loading = true;
+      var batch = this.$fb.firestore().batch();
+      var frndRef = this.$fb
+        .firestore()
+        .collection("users")
+        .doc(this.getUser.uid)
+        .collection("friends")
+        .doc(v.uid);
+
+      var frndToBeRemovedRef = this.$fb
+        .firestore()
+        .collection("users")
+        .doc(v.uid)
+        .collection("friends")
+        .doc(this.getUser.uid);
+      batch.delete(frndRef);
+      batch.delete(frndToBeRemovedRef);
+      batch
+        .commit()
+        .then(() => {
+          this.$bvToast.toast(`Friend Deleted Successfully`, {
+            title: "The Friend Has been Deleted ! ",
+            autoHideDelay: 5000,
+            variant: "success",
+            appendToast: true,
+          });
+          this.loading = false;
+        })
+        .catch((err) => {
+          this.loading = false;
+          alert("An Error occured while deleting friend " + err.message);
+        });
+    },
+  },
+  computed: {
+        ...mapGetters(["getFriendsList", "getRequests"]),
+  },
   watch: {
     getFriendsList: {
       handler(val) {
