@@ -32,10 +32,7 @@
                   class="mt-3 mx-3 mb-2"
                 >
                   <b-avatar
-                    badge
-                    badge-left
-                    badge-top
-                    badge-variant="success"
+      
                     class="bg-secondary"
                     :src="v.userData.profile_pic_url || defaultProfilePic"
                   ></b-avatar>
@@ -45,7 +42,6 @@
                       style="flex: 1; display: flex; flex-direction: column"
                     >
                       <span class="font-weight-bold">{{ v.userData.name }}</span>
-                      <span class="text-muted">status</span>
                     </div>
                     <div class="d-flex align-items-center text-muted">
                       {{ formatedDate(v.last_message_at) }}
@@ -89,7 +85,6 @@
                   style="flex: 1; display: flex; flex-direction: column"
                 >
                   <span class="font-weight-bold">{{ loadedContact.userData.name }}</span>
-                  <span class="text-muted">status . Last seen 2 hour ago</span>
                 </div>
               </div>
             </div>
