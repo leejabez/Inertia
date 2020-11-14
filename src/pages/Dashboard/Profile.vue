@@ -10,7 +10,7 @@
             })`,
           }"
         >
-        <i
+          <i
             class="mdi mdi-camera change_pic_icon"
             @click="showUpload = !showUpload"
           ></i>
@@ -27,6 +27,7 @@
                 @input="isChanged = true"
               ></b-input>
             </b-col>
+
             <b-col cols="12" md="6" class="my-3">
               <b-input
                 v-model="age"
@@ -64,7 +65,8 @@
           </b-row>
         </b-container>
       </b-col>
-       <b-col cols="12" class="d-flex justify-content-center">
+
+      <b-col cols="12" class="d-flex justify-content-center">
         <div class="col-8 col-md-4">
           <b-overlay :show="loading" class="w-100">
             <b-button
@@ -78,8 +80,8 @@
           </b-overlay>
         </div>
       </b-col>
-    <b-row>
-        <profile-component
+    </b-row>
+    <profile-component
       :showPopup="showUpload"
       @uploaded="uploadProfilePic"
       @toggle="showUpload = $event"
@@ -91,21 +93,51 @@
 import profileComponent from "../../components/profilePic";
 export default {
   data() {
-        return {
-        showUpload: false,
-        isChanged: false,
-        name: null,
-        age: null,
-        bio: null,
-        hobbies: null,
-        interests: null,
-        loading: false,
+    return {
+      showUpload: false,
+      name: null,
+      age: null,
+      bio: null,
+      hobbies: null,
+      interests: null,
+      isChanged: false,
+      loading: false,
+     
+    };
+  },
+  components: {
+    profileComponent,
+  },
+  methods: {
+    uploadProfilePic(e) {
+      console.log("asdadsads");
+      console.log(e);
+      var that = this;
+
+      var uploadTask = this.$fb
+        .storage()
+        .ref("users/" + this.getUser.uid + "profile_pic")
+        .putString(e,'data_url');
+      uploadTask.on(
+        "state_changed",
+        function () {},
+        function (error) {
+          alert("error while uploading image " + error);
+        },
+        function () {
+          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            console.log("File available at", downloadURL);
+            that.$fb
+              .firestore()
+              .collection("users")
+              .doc(that.getUser.uid)
+              .update({
+                profile_pic_url: downloadURL,
+              });
+          });
         }
+      );
     },
-    components: {
-        profileComponent,
-    },
-    methods: {
     save() {
       this.loading = true;
       var o = {
@@ -139,37 +171,10 @@ export default {
             appendToast: true,
           });
         });
-      },
-    uploadProfilePic(e) {
-      console.log("asdadsads");
-      console.log(e);
-      var that = this;
-
-      var uploadTask = this.$fb
-        .storage()
-        .ref("users/" + this.getUser.uid + "profile_pic")
-        .putString(e,'data_url');
-      uploadTask.on(
-        "state_changed",
-        function () {},
-        function (error) {
-          alert("error while uploading image " + error);
-        },
-        function () {
-          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-            console.log("File available at", downloadURL);
-            that.$fb
-              .firestore()
-              .collection("users")
-              .doc(that.getUser.uid)
-              .update({
-                profile_pic_url: downloadURL,
-              });
-          });
-        }
-      );   
     },
-    mounted() {
+    
+  },
+  mounted() {
     this.$nextTick(() => {
       this.name = this.getUser.name || null;
       this.age = this.getUser.age || null;
@@ -177,15 +182,29 @@ export default {
       this.hobbies = this.getUser.hobbies || null;
       this.interests = this.getUser.interests || null;
     });
-    },
-  }
-}
+  },
+};
 </script>
 
 <style>
-.profile_pic_customize {  
+.profile_pic_customize {
+  width: 170px;
+  height: 170px;
+  background-position: center;
+  background-size: cover;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 45px;
   display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
+}
+.change_pic_icon {
+  cursor: pointer;
+    color: #ffffff4f;
+    font-size: 107px;
+}
+.change_pic_icon:hover {
+  color: #fdfafa;
+  
 }
 </style>

@@ -69,7 +69,7 @@
               style="display: flex; align-items: center"
               class="px-3 pb-1 border-bottom"
             >
-              <b-avatar class="bg-secondary":src="loadedContact.profile_pic_url || defaultProfilePic">></b-avatar>
+              <b-avatar class="bg-secondary" :src="loadedContact.profile_pic_url || defaultProfilePic">></b-avatar>
               <div class=" " style="flex: 1; display: flex">
                 <div
                   class="text-left pl-2"

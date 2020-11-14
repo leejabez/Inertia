@@ -37,16 +37,14 @@ export default {
   },
   methods: {
     /**
-     * crop success
+     * upload fail
      *
-     * [param] imgDataUrl
+     * [param] status    server api return error status, like 500
      * [param] field
      */
     // eslint-disable-next-line no-unused-vars
-    cropSuccess(imgDataUrl, field) {
-      console.log("-------- crop success --------");
-
-      this.$emit("uploaded", imgDataUrl);
+    cropUploadFail(status, field) {
+      alert("an error occured");
     },
     /**
      * upload success
@@ -59,15 +57,18 @@ export default {
       console.log(jsonData);
       console.log("field: " + field);
     },
+    
+    
     /**
-     * upload fail
+     * crop success
      *
-     * [param] status    server api return error status, like 500
+     * [param] imgDataUrl
      * [param] field
      */
     // eslint-disable-next-line no-unused-vars
-    cropUploadFail(status, field) {
-      alert("an error occured");
+    cropSuccess(imgDataUrl, field) {
+      console.log("-------- crop success --------");
+      this.$emit("uploaded", imgDataUrl);
     },
   },
 };
