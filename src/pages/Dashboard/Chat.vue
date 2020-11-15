@@ -89,7 +89,7 @@
                   style="flex: 1; display: flex; flex-direction: column"
                 >
                   <span class="font-weight-bold">{{ loadedContact.userData.name }}</span>
-                  <span class="text-muted">status . Last seen 2 hour ago</span>
+                  <span class="text-muted"></span>
                 </div>
               </div>
             </div>

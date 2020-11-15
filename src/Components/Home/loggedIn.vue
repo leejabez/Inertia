@@ -26,7 +26,7 @@
               </div>
             </div>
             <div v-else class="h4 feeling_text">
-              Your Today Feeling Rating Is {{ todayFeelingRating }}
+              Your Rating Today Is {{ todayFeelingRating }}
             </div>
           </div>
           <div>

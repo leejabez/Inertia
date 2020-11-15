@@ -75,7 +75,7 @@
                         loadedContact.userData.name
                       }}</span>
                       <span class="text-muted"
-                        >status . Last seen 2 hour ago</span
+                        > </span
                       >
                     </div>
                   </div>
