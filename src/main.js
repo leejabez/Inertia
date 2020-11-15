@@ -29,8 +29,8 @@ var firebaseConfig = {
     appId: "1:483684076839:web:0c6a68dc882b11228eed02",
     measurementId: "G-0D74VFMVGB"
   }
-  
-firebase.initializeApp(config)
+
+firebase.initializeApp(firebaseConfig)
 Vue.prototype.$fb = firebase
 
 
