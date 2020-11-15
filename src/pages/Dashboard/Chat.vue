@@ -46,7 +46,7 @@
                       style="flex: 1; display: flex; flex-direction: column"
                     >
                       <span class="font-weight-bold">{{ v.userData.name }}</span>
-                      <span class="text-muted">status</span>
+                      <span class="text-muted">Status</span>
                     </div>
                     <div class="d-flex align-items-center text-muted">
                       {{ formatedDate(v.last_message_at) }}
@@ -89,7 +89,11 @@
                   style="flex: 1; display: flex; flex-direction: column"
                 >
                   <span class="font-weight-bold">{{ loadedContact.userData.name }}</span>
+<<<<<<< HEAD
                   <span class="text-muted"></span>
+=======
+                  <span class="text-muted">Status</span>
+>>>>>>> 9052aeffa971ae224f07374967808ae053820eed
                 </div>
               </div>
             </div>

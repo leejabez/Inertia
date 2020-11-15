@@ -75,7 +75,7 @@
                         loadedContact.userData.name
                       }}</span>
                       <span class="text-muted"
-                        > </span
+                        >Status</span
                       >
                     </div>
                   </div>

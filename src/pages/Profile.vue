@@ -81,7 +81,7 @@ export default {
             "   . lorem ipsum dolor sit amet . lorem ipsum dolor sit amet . lorem ipsum dolor sit amet . lorem ipsum dolor sit amet .",
         },
         interests: {
-          title: "Interestes",
+          title: "Interests",
           text:
             "   . lorem ipsum dolor sit amet . lorem ipsum dolor sit amet . lorem ipsum dolor sit amet . lorem ipsum dolor sit amet .",
         },
@@ -154,10 +154,10 @@ export default {
         batch.commit().then(function () {
           t.loading = false;
           t.sent = true;
-          alert("Friend Request Sent !");
+          alert("Friend Request Sent!");
         });
       } else {
-        alert("login to continue");
+        alert("Login to continue");
       }
     },
   },
