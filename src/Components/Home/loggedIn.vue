@@ -26,7 +26,11 @@
               </div>
             </div>
             <div v-else class="h4 feeling_text">
+<<<<<<< HEAD
+              Your Rating Today Is {{ todayFeelingRating }}
+=======
               Your rating today is {{ todayFeelingRating }}
+>>>>>>> 9052aeffa971ae224f07374967808ae053820eed
             </div>
           </div>
           <div>
