@@ -14,33 +14,32 @@ import VCalendar from 'v-calendar';
 
 // Use v-calendar & v-date-picker components
 Vue.use(VCalendar, {
-    componentPrefix: 'vc' 
+    componentPrefix: 'vc'
 });
 
 Vue.use(VueChatScroll)
 import firebase from 'firebase'
 var config = {
-    apiKey: "AIzaSyCbvzP9x_fPQQacQmZyJBYxhqXuP8gURyE",
-    authDomain: "bt3103-wildcard-f3bde.firebaseapp.com",
-    databaseURL: "https://bt3103-wildcard-f3bde.firebaseio.com",
-    projectId: "bt3103-wildcard-f3bde",
-    storageBucket: "bt3103-wildcard-f3bde.appspot.com",
-    messagingSenderId: "483684076839",
-    appId: "1:483684076839:web:0c6a68dc882b11228eed02",
-    measurementId: "G-0D74VFMVGB"
+    apiKey: "AIzaSyA_wkBkHC4id3jhgacsaLtJr0No3R3CqkI",
+    authDomain: "socialapp-f36f4.firebaseapp.com",
+    databaseURL: "https://socialapp-f36f4.firebaseio.com",
+    projectId: "socialapp-f36f4",
+    storageBucket: "socialapp-f36f4.appspot.com",
+    messagingSenderId: "677020236144",
+    appId: "1:677020236144:web:7020653dd7e6a8b0f9b7b5"
 }
 firebase.initializeApp(config)
 Vue.prototype.$fb = firebase
+
 
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         console.log('user logged in', user)
         firebase.firestore().collection('users').doc(user.uid).onSnapshot((snap) => {
             store.commit('setUser', snap.data())
+            // router.replace('/dashboard')
+            mountNow()
         })
-        router.replace('/')
-        mountNow()
-
     } else {
         console.log('not yet logged in')
         store.commit('setUser', null)
@@ -56,8 +55,3 @@ firebase.auth().onAuthStateChanged((user) => {
         }).$mount('#app')
     }
 })
-
-
-
-
-
