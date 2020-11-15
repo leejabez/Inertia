@@ -26,7 +26,7 @@
               </div>
             </div>
             <div v-else class="h4 feeling_text">
-              Your Today Feeling Rating Is {{ todayFeelingRating }}
+              Your Rating Today Is {{ todayFeelingRating }}
             </div>
           </div>
           <div>
@@ -36,7 +36,7 @@
             <em>- Plutarch</em>
           </div>
           <div>
-            <div class="h2">Do you have any task for today ?</div>
+            <div class="h2">Do you have any tasks for today?</div>
             <div class="d-flex mx-md-5 px-md-5">
               <input type="text" class="task_input" v-model="task" />
               <span class="ml-4">
