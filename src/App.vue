@@ -31,6 +31,7 @@
                       style="flex: 1; display: flex; flex-direction: column"
                     >
                       <span class="font-weight-bold">{{ v.userData.name }}</span>
+                      <span class="text-muted">status</span>
                     </div>
                     <div class="d-flex align-items-center text-muted">
                       {{ formatedDate(v.last_message_at) }}
@@ -73,7 +74,9 @@
                       <span class="font-weight-bold">{{
                         loadedContact.userData.name
                       }}</span>
-              
+                      <span class="text-muted"
+                        >status . Last seen 2 hour ago</span
+                      >
                     </div>
                   </div>
                 </div>

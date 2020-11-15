@@ -30,7 +30,7 @@
 
             <b-form-group
               id="input-group-2"
-              label="Password"
+              label="Passowrd"
               label-for="input-2"
             >
               <b-form-input
