@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
- 
+
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
@@ -20,7 +20,7 @@ const store = new Vuex.Store({
         setFriendsList: (s, p) => {
             s.friendsList = p
         },
-        getRequests: (s, p) => {
+        setRequests: (s, p) => {
             s.request = p
         }
     },
@@ -39,8 +39,57 @@ const store = new Vuex.Store({
         }
     },
     actions: {
+        async subscribeToFriendsList(s) {
+            if (!s.state.friendsList.length) {
+                var uid = s.getters.getUser ? s.getters.getUser.uid : null
+                if (uid) {
+                    console.log('subscribing to the frndx list')
+                    firebase
+                        .firestore()
+                        .collection("users")
+                        .doc(uid)
+                        .collection("friends")
+                        .onSnapshot(async (snapshot) => {
+                            var arr = [];
+                           
+                                for (var snap of snapshot.docs) {
+                                    var o = snap.data()
+                                    console.log(o)
+                                    console.log(o.userRef)
+                                    var temp = await o.userRef.get()
+                                    o.userData = temp.data()
+                                    arr.push(o);
+                                }
+                            s.commit('setFriendsList', arr)
+                        });
+                } else {
+                    //hanlde error no uid
+                }
+            } else {
+                //handle already added friends in the list
+            }
+        },
+        subscribeToRequests(s) {
+            if (!s.getters.getRequests.length) {
+                firebase
+                    .firestore()
+                    .collection("users")
+                    .doc(s.getters.getUser.uid)
+                    .collection("friends")
+                    .where("is_approved", "==", false)
+                    .onSnapshot((friends) => {
+                        var arr = [];
+                        friends.forEach((f) => {
+                            arr.push(f.data());
+                        });
+                        s.commit('setRequests', arr)
+                    })
+            }
+        },
         sendMessage(s, p) {
+
             return new Promise((resolve, reject) => {
+
                 var m = p.message;
                 var uid = s.getters.getUser.uid
                 var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
@@ -72,23 +121,31 @@ const store = new Vuex.Store({
                     .collection("messages")
                     .doc(key);
 
+                // var updateRootCopyForUser = firebase
+                //     .firestore()
+                //     .collection("users")
+                //     .doc(uid)
+                //     .collection("friends")
+                //     .doc(p.loadedContact.uid);
+
                 var updateRootCopyForSender = firebase
                     .firestore()
                     .collection("users")
                     .doc(p.loadedContact.uid)
-                    .collection("friends")  
+                    .collection("friends")
                     .doc(uid);
-                
+
                 var senderIncrement = firebase
-                .firestore()
-                .collection("users")
-                .doc(uid)
+                    .firestore()
+                    .collection("users")
+                    .doc(uid)
+
 
                 var receiverIncrement = firebase
                     .firestore()
                     .collection("users")
                     .doc(p.loadedContact.uid)
-                
+
                 batch.update(senderIncrement, {
                     sent: firebase.firestore.FieldValue.increment(1)
                 })
@@ -96,7 +153,6 @@ const store = new Vuex.Store({
                 batch.update(receiverIncrement, {
                     received: firebase.firestore.FieldValue.increment(1)
                 })
-
                 batch.set(sentCopyForUser, {
                     message: m,
                     timestamp,
@@ -108,14 +164,19 @@ const store = new Vuex.Store({
                     received: true,
                     timestamp,
                 });
+                
 
                 batch.update(updateRootCopyForSender, {
                     last_message: m,
                     last_message_at: timestamp,
                 });
+
+
+
                 batch
                     .commit()
                     .then(() => {
+
                         resolve()
                     })
                     .catch((err) => {
@@ -124,53 +185,6 @@ const store = new Vuex.Store({
                     });
             })
         },
-        
-        subscribeToRequests(s) {
-            if (!s.getters.getRequests.length) {
-                firebase
-                    .firestore()
-                    .collection("users")
-                    .doc(s.getters.getUser.uid)
-                    .collection("friends")
-                    .where("is_approved", "==", false)
-                    .onSnapshot((friends) => {
-                        var arr = [];
-                        friends.forEach((f) => {
-                            arr.push(f.data());
-                        });
-                        s.commit('setRequests', arr)
-                    })
-                    .catch(() => {
-                        alert("Unable to load friend requests");
-                    });
-            }
-        },
-        
-        subscribeToFriendsList(s) {
-            if (!s.state.friendsList.length) {
-                var uid = s.getters.getUser ? s.getters.getUser.uid : null
-                if (uid) {
-                    console.log('subscribing to the frndx list')
-                    firebase
-                        .firestore()
-                        .collection("users")
-                        .doc(uid)
-                        .collection("friends")
-                        .onSnapshot((snapshot) => {
-                            var arr = [];
-                            snapshot.forEach((snap) => {
-                                arr.push(snap.data());
-                            });
-                            s.commit('setFriendsList', arr)
-                        });
-                } else {
-                    // handle error with no uid
-                }
-            } else {
-                // handle friends that already added
-            }
-        },
-        
     }
 })
 

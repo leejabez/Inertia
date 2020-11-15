@@ -109,35 +109,6 @@ export default {
     profileComponent,
   },
   methods: {
-    uploadProfilePic(e) {
-      console.log("asdadsads");
-      console.log(e);
-      var that = this;
-
-      var uploadTask = this.$fb
-        .storage()
-        .ref("users/" + this.getUser.uid + "profile_pic")
-        .putString(e,'data_url');
-      uploadTask.on(
-        "state_changed",
-        function () {},
-        function (error) {
-          alert("error while uploading image " + error);
-        },
-        function () {
-          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-            console.log("File available at", downloadURL);
-            that.$fb
-              .firestore()
-              .collection("users")
-              .doc(that.getUser.uid)
-              .update({
-                profile_pic_url: downloadURL,
-              });
-          });
-        }
-      );
-    },
     save() {
       this.loading = true;
       var o = {
@@ -172,7 +143,35 @@ export default {
           });
         });
     },
-    
+    uploadProfilePic(e) {
+      console.log("asdadsads");
+      console.log(e);
+      var that = this;
+
+      var uploadTask = this.$fb
+        .storage()
+        .ref("users/" + this.getUser.uid + "profile_pic")
+        .putString(e,'data_url');
+      uploadTask.on(
+        "state_changed",
+        function () {},
+        function (error) {
+          alert("error while uploading image " + error);
+        },
+        function () {
+          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            console.log("File available at", downloadURL);
+            that.$fb
+              .firestore()
+              .collection("users")
+              .doc(that.getUser.uid)
+              .update({
+                profile_pic_url: downloadURL,
+              });
+          });
+        }
+      );
+    },
   },
   mounted() {
     this.$nextTick(() => {
