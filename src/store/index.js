@@ -20,7 +20,7 @@ const store = new Vuex.Store({
         setFriendsList: (s, p) => {
             s.friendsList = p
         },
-        setRequests: (s, p) => {
+        getRequests: (s, p) => {
             s.request = p
         }
     },
@@ -39,7 +39,7 @@ const store = new Vuex.Store({
         }
     },
     actions: {
-        async subscribeToFriendsList(s) {
+        subscribeToFriendsList(s) {
             if (!s.state.friendsList.length) {
                 var uid = s.getters.getUser ? s.getters.getUser.uid : null
                 if (uid) {
@@ -49,17 +49,11 @@ const store = new Vuex.Store({
                         .collection("users")
                         .doc(uid)
                         .collection("friends")
-                        .onSnapshot(async (snapshot) => {
+                        .onSnapshot((snapshot) => {
                             var arr = [];
-                           
-                                for (var snap of snapshot.docs) {
-                                    var o = snap.data()
-                                    console.log(o)
-                                    console.log(o.userRef)
-                                    var temp = await o.userRef.get()
-                                    o.userData = temp.data()
-                                    arr.push(o);
-                                }
+                            snapshot.forEach((snap) => {
+                                arr.push(snap.data());
+                            });
                             s.commit('setFriendsList', arr)
                         });
                 } else {
@@ -84,12 +78,22 @@ const store = new Vuex.Store({
                         });
                         s.commit('setRequests', arr)
                     })
+                    .catch(() => {
+                        alert("Unable to load friend requests");
+                    });
             }
         },
         sendMessage(s, p) {
-
+            /**
+             * p = {
+             * message:message ,
+             * loadedContact,
+             * 
+             * }
+             * 
+             * 
+             */
             return new Promise((resolve, reject) => {
-
                 var m = p.message;
                 var uid = s.getters.getUser.uid
                 var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
@@ -164,19 +168,20 @@ const store = new Vuex.Store({
                     received: true,
                     timestamp,
                 });
-                
+                // batch.update(updateRootCopyForUser, {
+                //     last_message: m,
+                //     last_message_at: timestamp,
+                //     unread_messages: p.loadedContact.unread_messages ?
+                //         p.loadedContact.unread_messages : 0,
+                // });
 
                 batch.update(updateRootCopyForSender, {
                     last_message: m,
                     last_message_at: timestamp,
                 });
-
-
-
                 batch
                     .commit()
                     .then(() => {
-
                         resolve()
                     })
                     .catch((err) => {
