@@ -87,7 +87,15 @@ const store = new Vuex.Store({
             }
         },
         sendMessage(s, p) {
-
+            /**
+             * p = {
+             * message:message ,
+             * loadedContact,
+             * 
+             * }
+             * 
+             * 
+             */
             return new Promise((resolve, reject) => {
 
                 var m = p.message;
@@ -164,7 +172,12 @@ const store = new Vuex.Store({
                     received: true,
                     timestamp,
                 });
-                
+                // batch.update(updateRootCopyForUser, {
+                //     last_message: m,
+                //     last_message_at: timestamp,
+                //     unread_messages: p.loadedContact.unread_messages ?
+                //         p.loadedContact.unread_messages : 0,
+                // });
 
                 batch.update(updateRootCopyForSender, {
                     last_message: m,

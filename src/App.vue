@@ -329,5 +329,25 @@ export default {
     background: white;
     border-radius: 69px;
   }
+
+  // .message_box::before {
+  //   content: "";
+  //   position: absolute;
+  //   width: 100%;
+  //   height: 100%;
+  //   top: 0;
+  //   left: 0;
+  //   z-index: 0;
+  //   background-size: cover;
+  // }
+
+  // .message_box_left::before {
+  //   //background: url("./assets/message.svg") no-repeat center center;
+
+  // }
+  // .message_box_right::before {
+  //   //background: url("./assets/message_sent.svg") no-repeat center center;
+  //   transform: rotateY(0.5turn);
+  // }
 }
 </style>

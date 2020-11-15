@@ -14,12 +14,12 @@ import VCalendar from 'v-calendar';
 
 // Use v-calendar & v-date-picker components
 Vue.use(VCalendar, {
-    componentPrefix: 'vc' 
+    componentPrefix: 'vc'
 });
 
 Vue.use(VueChatScroll)
 import firebase from 'firebase'
-var config = {
+var firebaseConfig = {
     apiKey: "AIzaSyCbvzP9x_fPQQacQmZyJBYxhqXuP8gURyE",
     authDomain: "bt3103-wildcard-f3bde.firebaseapp.com",
     databaseURL: "https://bt3103-wildcard-f3bde.firebaseio.com",
@@ -28,9 +28,11 @@ var config = {
     messagingSenderId: "483684076839",
     appId: "1:483684076839:web:0c6a68dc882b11228eed02",
     measurementId: "G-0D74VFMVGB"
-}
-firebase.initializeApp(config)
+  }
+
+firebase.initializeApp(firebaseConfig)
 Vue.prototype.$fb = firebase
+
 
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -56,8 +58,3 @@ firebase.auth().onAuthStateChanged((user) => {
         }).$mount('#app')
     }
 })
-
-
-
-
-
