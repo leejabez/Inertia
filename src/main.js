@@ -37,9 +37,10 @@ firebase.auth().onAuthStateChanged((user) => {
         console.log('user logged in', user)
         firebase.firestore().collection('users').doc(user.uid).onSnapshot((snap) => {
             store.commit('setUser', snap.data())
-            // router.replace('/dashboard')
-            mountNow()
         })
+        router.replace('/')
+        mountNow()
+
     } else {
         console.log('not yet logged in')
         store.commit('setUser', null)

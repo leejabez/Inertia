@@ -20,7 +20,7 @@ const store = new Vuex.Store({
         setFriendsList: (s, p) => {
             s.friendsList = p
         },
-        getRequests: (s, p) => {
+        setRequests: (s, p) => {
             s.request = p
         }
     },
@@ -39,7 +39,7 @@ const store = new Vuex.Store({
         }
     },
     actions: {
-        subscribeToFriendsList(s) {
+        async subscribeToFriendsList(s) {
             if (!s.state.friendsList.length) {
                 var uid = s.getters.getUser ? s.getters.getUser.uid : null
                 if (uid) {
@@ -49,11 +49,17 @@ const store = new Vuex.Store({
                         .collection("users")
                         .doc(uid)
                         .collection("friends")
-                        .onSnapshot((snapshot) => {
+                        .onSnapshot(async (snapshot) => {
                             var arr = [];
-                            snapshot.forEach((snap) => {
-                                arr.push(snap.data());
-                            });
+                           
+                                for (var snap of snapshot.docs) {
+                                    var o = snap.data()
+                                    console.log(o)
+                                    console.log(o.userRef)
+                                    var temp = await o.userRef.get()
+                                    o.userData = temp.data()
+                                    arr.push(o);
+                                }
                             s.commit('setFriendsList', arr)
                         });
                 } else {
@@ -78,9 +84,6 @@ const store = new Vuex.Store({
                         });
                         s.commit('setRequests', arr)
                     })
-                    .catch(() => {
-                        alert("Unable to load friend requests");
-                    });
             }
         },
         sendMessage(s, p) {
@@ -94,6 +97,7 @@ const store = new Vuex.Store({
              * 
              */
             return new Promise((resolve, reject) => {
+
                 var m = p.message;
                 var uid = s.getters.getUser.uid
                 var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
@@ -179,9 +183,13 @@ const store = new Vuex.Store({
                     last_message: m,
                     last_message_at: timestamp,
                 });
+
+
+
                 batch
                     .commit()
                     .then(() => {
+
                         resolve()
                     })
                     .catch((err) => {
