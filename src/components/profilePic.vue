@@ -40,6 +40,7 @@ export default {
     cropSuccess(imgDataUrl, field) {
       console.log("-------- crop success --------");
       this.$emit("uploaded", imgDataUrl);
+      console.log(field);
     },
 
     cropUploadSuccess(jsonData, field) {
@@ -50,6 +51,7 @@ export default {
 
     cropUploadFail(status, field) {
       alert("an error occured");
+      console.log(field);
     },
   },
 };

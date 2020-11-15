@@ -19,16 +19,18 @@ Vue.use(VCalendar, {
 
 Vue.use(VueChatScroll)
 import firebase from 'firebase'
-var config = {
-    apiKey: "AIzaSyA_wkBkHC4id3jhgacsaLtJr0No3R3CqkI",
-    authDomain: "socialapp-f36f4.firebaseapp.com",
-    databaseURL: "https://socialapp-f36f4.firebaseio.com",
-    projectId: "socialapp-f36f4",
-    storageBucket: "socialapp-f36f4.appspot.com",
-    messagingSenderId: "677020236144",
-    appId: "1:677020236144:web:7020653dd7e6a8b0f9b7b5"
-}
-firebase.initializeApp(config)
+var firebaseConfig = {
+    apiKey: "AIzaSyCbvzP9x_fPQQacQmZyJBYxhqXuP8gURyE",
+    authDomain: "bt3103-wildcard-f3bde.firebaseapp.com",
+    databaseURL: "https://bt3103-wildcard-f3bde.firebaseio.com",
+    projectId: "bt3103-wildcard-f3bde",
+    storageBucket: "bt3103-wildcard-f3bde.appspot.com",
+    messagingSenderId: "483684076839",
+    appId: "1:483684076839:web:0c6a68dc882b11228eed02",
+    measurementId: "G-0D74VFMVGB"
+  }
+
+firebase.initializeApp(firebaseConfig)
 Vue.prototype.$fb = firebase
 
 
