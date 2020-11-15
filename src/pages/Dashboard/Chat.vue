@@ -6,8 +6,9 @@
         md="4"
         lg="3"
         class="pt-4 h-100"
-        style="background-color: #f2f5f9; display: flex; flex-direction: column"
+        style="background-color: #e5e5e5; display: flex; flex-direction: column"
       >
+        <!-- eslint-disable-next-line vue/no-parsing-error -->
 
         <b-input placeholder="Search" class="rounded-pill search_input">
         </b-input>
@@ -32,7 +33,10 @@
                   class="mt-3 mx-3 mb-2"
                 >
                   <b-avatar
-      
+                    badge
+                    badge-left
+                    badge-top
+                    badge-variant="success"
                     class="bg-secondary"
                     :src="v.userData.profile_pic_url || defaultProfilePic"
                   ></b-avatar>
@@ -42,6 +46,7 @@
                       style="flex: 1; display: flex; flex-direction: column"
                     >
                       <span class="font-weight-bold">{{ v.userData.name }}</span>
+                      <span class="text-muted">status</span>
                     </div>
                     <div class="d-flex align-items-center text-muted">
                       {{ formatedDate(v.last_message_at) }}
@@ -78,13 +83,13 @@
                 class="bg-secondary"
                 :src="loadedContact.userData.profile_pic_url || defaultProfilePic"
               ></b-avatar>
-              
               <div class=" " style="flex: 1; display: flex">
                 <div
                   class="text-left pl-2"
                   style="flex: 1; display: flex; flex-direction: column"
                 >
                   <span class="font-weight-bold">{{ loadedContact.userData.name }}</span>
+                  <span class="text-muted">status . Last seen 2 hour ago</span>
                 </div>
               </div>
             </div>
@@ -134,7 +139,6 @@
                 class="write_message p-4"
                 placeholder="Type Message Here"
                 v-model="message"
-                style = "box-shadow: 10px 10px 5px #ccc"
               />
               <b-button
                 variant="primary"
@@ -292,7 +296,6 @@ export default {
     0px 1px 3px rgba(0, 0, 0, 0.15);
   border-radius: 6px;
 }
-
 .write_message {
   background: #dee5ef;
   opacity: 0.4;
@@ -303,7 +306,6 @@ export default {
   color: black;
   width: 90%;
 }
-
 .send_btn {
   position: absolute;
   bottom: 0;
@@ -311,7 +313,6 @@ export default {
   margin-bottom: 14px;
   margin-right: 19px;
 }
-
 .message_container {
   min-height: 61px;
   max-width: 70%;
@@ -322,7 +323,6 @@ export default {
   position: relative;
   overflow: hidden;
 }
-
 .message_box_right {
   color: white;
 }
@@ -341,12 +341,10 @@ export default {
 .message_box_left::before {
   background: url("../../assets/message.svg") no-repeat center center;
 }
-
 .message_box_right::before {
   background: url("../../assets/message_sent.svg") no-repeat center center;
   transform: rotateY(0.5turn);
 }
-
 .blocked_friend {
   background: grey;
   cursor: not-allowed !important;

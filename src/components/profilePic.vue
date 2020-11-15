@@ -1,3 +1,4 @@
+ 
 <template>
   <div>
     <my-upload
@@ -36,39 +37,19 @@ export default {
     "my-upload": myUpload,
   },
   methods: {
-    /**
-     * upload fail
-     *
-     * [param] status    server api return error status, like 500
-     * [param] field
-     */
-    // eslint-disable-next-line no-unused-vars
-    cropUploadFail(status, field) {
-      alert("an error occured");
+    cropSuccess(imgDataUrl, field) {
+      console.log("-------- crop success --------");
+      this.$emit("uploaded", imgDataUrl);
     },
-    /**
-     * upload success
-     *
-     * [param] jsonData  server api return data, already json encode
-     * [param] field
-     */
+
     cropUploadSuccess(jsonData, field) {
       console.log("-------- upload success --------");
       console.log(jsonData);
       console.log("field: " + field);
     },
-    
-    
-    /**
-     * crop success
-     *
-     * [param] imgDataUrl
-     * [param] field
-     */
-    // eslint-disable-next-line no-unused-vars
-    cropSuccess(imgDataUrl, field) {
-      console.log("-------- crop success --------");
-      this.$emit("uploaded", imgDataUrl);
+
+    cropUploadFail(status, field) {
+      alert("an error occured");
     },
   },
 };
