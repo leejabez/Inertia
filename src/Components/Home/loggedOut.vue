@@ -7,7 +7,7 @@
           style="max-height: 520px; height: 520px"
         >
           <b-col class="text-left display-4 font-weight-bold">
-            Your Mental Health<br/>
+            Your Mental Health <br />
             Matters</b-col
           >
         </b-row>
