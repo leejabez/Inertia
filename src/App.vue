@@ -21,7 +21,6 @@
                     badge
                     badge-left
                     badge-top
-                    :src="v.userData.profile_pic_url || defaultProfilePic"
                     badge-variant="success"
                     class="bg-secondary"
                   ></b-avatar>
@@ -30,7 +29,7 @@
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
-                      <span class="font-weight-bold">{{ v.userData.name }}</span>
+                      <span class="font-weight-bold">{{ v.name }}</span>
                       <span class="text-muted">status</span>
                     </div>
                     <div class="d-flex align-items-center text-muted">
@@ -62,17 +61,14 @@
                     class="mdi mdi-chevron-left"
                     style="line-height: 35px; font-size: 35px"
                   ></i>
-                  <b-avatar
-                    class="bg-secondary"
-                    :src="loadedContact.userData.profile_pic_url || defaultProfilePic"
-                  ></b-avatar>
+                  <b-avatar class="bg-secondary"></b-avatar>
                   <div class=" " style="flex: 1; display: flex">
                     <div
                       class="text-left pl-2"
                       style="flex: 1; display: flex; flex-direction: column"
                     >
                       <span class="font-weight-bold">{{
-                        loadedContact.userData.name
+                        loadedContact.name
                       }}</span>
                       <span class="text-muted"
                         >status . Last seen 2 hour ago</span
@@ -329,5 +325,26 @@ export default {
     background: white;
     border-radius: 69px;
   }
+
+  // .message_box::before {
+  //   content: "";
+  //   position: absolute;
+  //   width: 100%;
+  //   height: 100%;
+  //   top: 0;
+  //   left: 0;
+  //   z-index: 0;
+  //   background-size: cover;
+  // }
+
+  // .message_box_left::before {
+  //   //background: url("./assets/message.svg") no-repeat center center;
+
+  // }
+  // .message_box_right::before {
+  //   //background: url("./assets/message_sent.svg") no-repeat center center;
+  //   transform: rotateY(0.5turn);
+  // }
 }
+
 </style>
