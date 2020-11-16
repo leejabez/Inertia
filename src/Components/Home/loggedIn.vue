@@ -25,8 +25,7 @@
                 {{ v.rate }}
               </div>
             </div>
-            <div v-else class="h4 feeling_text">
-              Your rating today is {{ todayFeelingRating }}
+            <div v-else class="h4 feeling_text">Your Rating Today Is {{ todayFeelingRating }}
             </div>
           </div>
           <div>
