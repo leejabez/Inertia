@@ -46,7 +46,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <div class="py-4 text-center">footer</div>
+    <div class="py-4 text-center"></div>
   </div>
 </template>
 

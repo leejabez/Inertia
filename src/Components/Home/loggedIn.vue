@@ -36,7 +36,7 @@
             <em>- Plutarch</em>
           </div>
           <div>
-            <div class="h2">Do you have any tasks for today ?</div>
+            <div class="h2">Do you have any tasks for today?</div>
             <div class="d-flex mx-md-5 px-md-5">
               <input type="text" class="task_input" v-model="task" />
               <span class="ml-4">
